@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
-#include "LightManager.h"
+#include "ProceduralFoliageComponent.h"
 #include "GameManager.generated.h"
 
 /**
@@ -19,6 +19,8 @@ public:
 
 	static UGameManager* GetInstance();
 	virtual void Init() override;
+	UProceduralFoliageComponent* ProceduralFoliageGenerator;
+	AActor* ProceduralFoliageVolume;
 
 private:
 	static UGameManager* _instance;
