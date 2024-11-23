@@ -8,7 +8,7 @@ public class InfiniteHorror : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "Foliage" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "Foliage", "AIModule" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] { "Foliage" });
 
