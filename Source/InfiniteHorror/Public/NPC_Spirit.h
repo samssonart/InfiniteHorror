@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Perception/PawnSensingComponent.h"
+#include "NavMesh/NavMeshBoundsVolume.h"
+#include "BehaviorTree/BehaviorTree.h"
 #include "NPC_Spirit.generated.h"
+
 
 UCLASS()
 class INFINITEHORROR_API ANPC_Spirit : public ACharacter
@@ -14,20 +16,17 @@ class INFINITEHORROR_API ANPC_Spirit : public ACharacter
 
 public:
 	// Sets default values for this character's properties
-	ANPC_Spirit();
+	explicit ANPC_Spirit();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness")
-	UPawnSensingComponent* PawnSensor;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness", meta = (AllowPrivateAccess = "true"))
+	UBehaviorTree* BehaviourTree;
+
+	UBehaviorTree* GetBehaviorTree();
+
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 };
