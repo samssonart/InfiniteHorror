@@ -26,6 +26,9 @@ void ANPC_Spirit_AIController::OnPossess(APawn* InPawn)
 			Blackboard = blackBoard;
 			RunBehaviorTree(tree);
 		}
+
+		this->PawnSensor = npc->GetPawnSensor();
+
 	}
 }
 
@@ -33,13 +36,44 @@ void ANPC_Spirit_AIController::OnPossess(APawn* InPawn)
 void ANPC_Spirit_AIController::BeginPlay()
 {
 	Super::BeginPlay();
+	if (PawnSensor)
+	{
+		FString message = TEXT("Pawn Sensor is valid, creating callbacks");
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, message);
+
+		PawnSensor->OnSeePawn.AddDynamic(this, &ANPC_Spirit_AIController::OnSeePawn);
+		PawnSensor->OnHearNoise.AddDynamic(this, &ANPC_Spirit_AIController::OnHearNoise);
+	}
 }
 
 // Called every frame
 void ANPC_Spirit_AIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
 
+void ANPC_Spirit_AIController::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+	
+}
+
+void ANPC_Spirit_AIController::OnHearNoise(APawn* OtherActor, const FVector& Location, float Volume)
+{
+
+	const FString VolumeDesc = FString::Printf(TEXT(" at volume %f"), Volume);
+	FString message = TEXT("I HEAR YOU!!! ") + OtherActor->GetName() + VolumeDesc;
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, message);
+
+	// TODO: game-specific logic    
+}
+
+void ANPC_Spirit_AIController::OnSeePawn(APawn* OtherPawn)
+{
+	FString message = TEXT("I SEE YOU!!! ") + OtherPawn->GetName();
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, message);
+
+	// TODO: game-specific logic
 }
 
 

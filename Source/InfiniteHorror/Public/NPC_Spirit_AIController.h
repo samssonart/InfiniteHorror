@@ -19,7 +19,6 @@ public:
 	// Sets default values for this character's properties
 	explicit ANPC_Spirit_AIController();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness")
 	UPawnSensingComponent* PawnSensor;
 
 	// Called every frame
@@ -32,4 +31,15 @@ protected:
 	bool playerDetected = false;
 
 	virtual void OnPossess(APawn* InPawn) override;
+
+	virtual void PostInitializeComponents() override;
+
+	//////////////////////////////////////////////////////////////////////////
+	// UPawnSensingComponent Delegates
+
+	UFUNCTION()
+	void OnHearNoise(APawn* OtherActor, const FVector& Location, float Volume);
+
+	UFUNCTION()
+	void OnSeePawn(APawn* OtherPawn);
 };

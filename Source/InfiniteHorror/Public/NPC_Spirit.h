@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "NavMesh/NavMeshBoundsVolume.h"
 #include "BehaviorTree/BehaviorTree.h"
+#include "Perception/PawnSensingComponent.h"
 #include "NPC_Spirit.generated.h"
 
 
@@ -19,9 +20,14 @@ public:
 	explicit ANPC_Spirit();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness", meta = (AllowPrivateAccess = "true"))
-	UBehaviorTree* BehaviourTree;
+	UBehaviorTree* BehaviourTree = nullptr;
 
 	UBehaviorTree* GetBehaviorTree();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness", meta = (AllowPrivateAccess = "true"))
+	UPawnSensingComponent* PawnSensor = nullptr;
+
+	UPawnSensingComponent* GetPawnSensor();
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
