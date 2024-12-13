@@ -17,12 +17,6 @@ EBTNodeResult::Type UBTTask_GetRandomLocation::ExecuteTask(UBehaviorTreeComponen
 	{
 		FVector const Origin = npc->GetPawn()->GetActorLocation();
 
-		const FString VectorPrintf = FString(TEXT("{0}, {1}, {2}"));
-
-		const FString FormattedVector = FString::Format(*VectorPrintf, { Origin.X, Origin.Y, Origin.Z });
-
-		UE_LOG(LogTemp, Log, TEXT("Origin acquired at %s"), *FormattedVector);
-
 		if (NavSystem)
 		{
 			if (!NavigationInvokerSet)
@@ -34,8 +28,6 @@ EBTNodeResult::Type UBTTask_GetRandomLocation::ExecuteTask(UBehaviorTreeComponen
 			FNavLocation Location;
 			if (NavSystem->GetRandomPointInNavigableRadius(Origin, SearchRadius, Location))
 			{
-				const FString FormattedVector2 = FString::Format(*VectorPrintf, { Location.Location.X, Location.Location.Y, Location.Location.Z });
-				UE_LOG(LogTemp, Log, TEXT("Random point acquired at %s"), *FormattedVector2);
 				UBlackboardComponent* BBComp =  OwnerComp.GetBlackboardComponent();
 				BBComp->SetValueAsVector(GetSelectedBlackboardKey(), Location.Location);
 			}

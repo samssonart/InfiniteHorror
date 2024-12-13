@@ -6,6 +6,7 @@
 #include "AIController.h"
 #include "GameFramework/Character.h"
 #include "Perception/PawnSensingComponent.h"
+#include "Perception/AIPerceptionTypes.h"
 #include "NavMesh/NavMeshBoundsVolume.h"
 #include "NPC_Spirit_AIController.generated.h"
 
@@ -20,6 +21,8 @@ public:
 	explicit ANPC_Spirit_AIController();
 
 	UPawnSensingComponent* PawnSensor;
+
+	float DetectionCooldown = 2.5f;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -42,4 +45,8 @@ protected:
 
 	UFUNCTION()
 	void OnSeePawn(APawn* OtherPawn);
+
+private:
+
+	bool _playerDetected;
 };
