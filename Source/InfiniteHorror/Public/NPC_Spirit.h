@@ -6,7 +6,6 @@
 #include "GameFramework/Character.h"
 #include "NavMesh/NavMeshBoundsVolume.h"
 #include "BehaviorTree/BehaviorTree.h"
-#include "Perception/PawnSensingComponent.h"
 #include "NPC_Spirit.generated.h"
 
 
@@ -24,15 +23,11 @@ public:
 
 	UBehaviorTree* GetBehaviorTree();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness", meta = (AllowPrivateAccess = "true"))
-	UPawnSensingComponent* PawnSensor = nullptr;
-
-	UPawnSensingComponent* GetPawnSensor();
-
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
 };

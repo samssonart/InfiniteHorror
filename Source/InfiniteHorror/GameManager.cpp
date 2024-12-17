@@ -1,9 +1,9 @@
 // Copyright (c) 2024 Samssonart. All rights reserved.
 
 
+#include "GameManager.h"
 #include <string>
 #include "Kismet/GameplayStatics.h"
-#include "GameManager.h"
 #include "Engine/Engine.h"
 
 UGameManager* UGameManager::_instance = nullptr;

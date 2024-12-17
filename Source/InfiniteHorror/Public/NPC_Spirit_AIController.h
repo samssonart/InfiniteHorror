@@ -5,8 +5,10 @@
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "GameFramework/Character.h"
-#include "Perception/PawnSensingComponent.h"
 #include "Perception/AIPerceptionTypes.h"
+#include "Perception/AISenseConfig_Sight.h"
+#include "Perception/AISenseConfig_Hearing.h"
+#include "Perception/AIPerceptionComponent.h"
 #include "NavMesh/NavMeshBoundsVolume.h"
 #include "NPC_Spirit_AIController.generated.h"
 
@@ -19,10 +21,6 @@ class INFINITEHORROR_API ANPC_Spirit_AIController : public AAIController
 public:
 	// Sets default values for this character's properties
 	explicit ANPC_Spirit_AIController();
-
-	UPawnSensingComponent* PawnSensor;
-
-	float DetectionCooldown = 2.5f;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -37,16 +35,13 @@ protected:
 
 	virtual void PostInitializeComponents() override;
 
-	//////////////////////////////////////////////////////////////////////////
-	// UPawnSensingComponent Delegates
-
-	UFUNCTION()
-	void OnHearNoise(APawn* OtherActor, const FVector& Location, float Volume);
-
-	UFUNCTION()
-	void OnSeePawn(APawn* OtherPawn);
-
 private:
 
-	bool _playerDetected;
+	class UAISenseConfig_Sight* SightConfiguration;
+	class UAISenseConfig_Hearing* HearingConfiguration;
+
+	void SetupStimuli();
+
+	UFUNCTION()
+	void OnPlayerDetected(AActor* DetectedActor, FAIStimulus const Stimulus);
 };
