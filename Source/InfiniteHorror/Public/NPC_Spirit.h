@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "NavMesh/NavMeshBoundsVolume.h"
 #include "BehaviorTree/BehaviorTree.h"
+#include "Animation/AnimMontage.h"
 #include "NPC_Spirit.generated.h"
 
 
@@ -23,6 +24,10 @@ public:
 
 	UBehaviorTree* GetBehaviorTree();
 
+	UAnimMontage* GetAnimationMontage() const;
+
+	void Attack();
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -30,4 +35,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", meta = (AllowPrivateAccess = "true"))
+	UAnimMontage* AnimationMontage;
 };

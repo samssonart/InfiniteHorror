@@ -57,9 +57,9 @@ void ANPC_Spirit_AIController::SetupStimuli()
     if (SightConfiguration)
     {
         SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
-        SightConfiguration->SightRadius = 500.f;
-        SightConfiguration->LoseSightRadius = SightConfiguration->SightRadius + 25.f;
-        SightConfiguration->PeripheralVisionAngleDegrees = 75.f;
+        SightConfiguration->SightRadius = 5000.f;
+        SightConfiguration->LoseSightRadius = SightConfiguration->SightRadius + 50.f;
+        SightConfiguration->PeripheralVisionAngleDegrees = 80.f;
         SightConfiguration->SetMaxAge(5.f);
         SightConfiguration->AutoSuccessRangeFromLastSeenLocation = 520.f;
         SightConfiguration->DetectionByAffiliation.bDetectEnemies = true;

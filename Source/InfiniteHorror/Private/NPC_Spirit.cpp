@@ -31,4 +31,17 @@ UBehaviorTree* ANPC_Spirit::GetBehaviorTree()
 	return BehaviourTree;
 }
 
+UAnimMontage* ANPC_Spirit::GetAnimationMontage() const
+{
+	return AnimationMontage;
+}
+
+void ANPC_Spirit::Attack()
+{
+	if (AnimationMontage)
+	{
+		PlayAnimMontage(AnimationMontage);
+	}
+}
+
 

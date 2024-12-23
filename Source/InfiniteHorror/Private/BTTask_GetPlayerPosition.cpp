@@ -5,6 +5,8 @@
 #include "NavigationSystem.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/Actor.h"
+#include "Camera/CameraComponent.h"
 
 UBTTask_GetPlayerPosition::UBTTask_GetPlayerPosition(FObjectInitializer const& ObjecctInitializer)
 {
@@ -14,9 +16,17 @@ UBTTask_GetPlayerPosition::UBTTask_GetPlayerPosition(FObjectInitializer const& O
 EBTNodeResult::Type UBTTask_GetPlayerPosition::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	UWorld* GameWorld = GetWorld();
+	APlayerController* const playerCont = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+
+
 	if (ACharacter* const PlayerActor = UGameplayStatics::GetPlayerCharacter(GameWorld, 0))
 	{
-		FVector const PlayerLocation = PlayerActor->GetActorLocation();
+		FVector PlayerLocation = PlayerActor->GetActorLocation();
+
+		if (playerCont)
+		{
+			PlayerLocation += static_cast<FVector>(playerCont->PlayerCameraManager->GetActorForwardVector() * PlayerOffset);
+		}
 
 		UBlackboardComponent* BBComp = OwnerComp.GetBlackboardComponent();
 		BBComp->SetValueAsVector(GetSelectedBlackboardKey(), PlayerLocation);

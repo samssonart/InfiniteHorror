@@ -19,4 +19,7 @@ public:
 	explicit UBTTask_GetPlayerPosition(FObjectInitializer const& ObjecctInitializer);
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 	
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness", meta = (AllowPrivateAccess = "true"))
+	float PlayerOffset = 10.0f;
 };
