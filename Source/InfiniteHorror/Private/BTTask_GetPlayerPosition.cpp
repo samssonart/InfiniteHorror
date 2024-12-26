@@ -25,7 +25,14 @@ EBTNodeResult::Type UBTTask_GetPlayerPosition::ExecuteTask(UBehaviorTreeComponen
 
 		if (playerCont)
 		{
-			PlayerLocation += static_cast<FVector>(playerCont->PlayerCameraManager->GetActorForwardVector() * PlayerOffset);
+			if (APlayerCameraManager* camMan = playerCont->PlayerCameraManager)
+			{
+				PlayerLocation += camMan->GetActorForwardVector() * PlayerOffset;
+			}
+		}
+		else
+		{
+			PlayerLocation += PlayerActor->GetActorForwardVector() * PlayerOffset;
 		}
 
 		UBlackboardComponent* BBComp = OwnerComp.GetBlackboardComponent();
