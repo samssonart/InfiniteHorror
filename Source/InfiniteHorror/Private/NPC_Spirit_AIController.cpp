@@ -29,6 +29,12 @@ void ANPC_Spirit_AIController::OnPossess(APawn* InPawn)
 			Blackboard = blackBoard;
 			RunBehaviorTree(tree);
 		}
+
+		SetSightParameters(this, npc->SightRadius, npc->LoseSightOffset, npc->PeripheralVisionAngle);
+
+		FString PlayerInfo = FString::Printf(TEXT("Range: %f - Lose: %f - Angle: %f"),
+			SightConfiguration->SightRadius, SightConfiguration->LoseSightRadius, SightConfiguration->PeripheralVisionAngleDegrees);
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, PlayerInfo);
 	}
 }
 
@@ -57,18 +63,19 @@ void ANPC_Spirit_AIController::SetupStimuli()
     if (SightConfiguration)
     {
         SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
-        SightConfiguration->SightRadius = 5000.f;
-        SightConfiguration->LoseSightRadius = SightConfiguration->SightRadius + 50.f;
-        SightConfiguration->PeripheralVisionAngleDegrees = 80.f;
-        SightConfiguration->SetMaxAge(5.f);
-        SightConfiguration->AutoSuccessRangeFromLastSeenLocation = 520.f;
-        SightConfiguration->DetectionByAffiliation.bDetectEnemies = true;
-        SightConfiguration->DetectionByAffiliation.bDetectFriendlies = true;
-        SightConfiguration->DetectionByAffiliation.bDetectNeutrals = true;
-
+		// Initialize at general purpose values
+		SightConfiguration->SightRadius = 1000.0f;
+		SightConfiguration->LoseSightRadius = 1150.0f;
+		SightConfiguration->PeripheralVisionAngleDegrees = 80.0f;
+		SightConfiguration->SetMaxAge(5.f);
+		SightConfiguration->AutoSuccessRangeFromLastSeenLocation = 520.f;
+		SightConfiguration->DetectionByAffiliation.bDetectEnemies = true;
+		SightConfiguration->DetectionByAffiliation.bDetectFriendlies = true;
+		SightConfiguration->DetectionByAffiliation.bDetectNeutrals = true;
+		
         GetPerceptionComponent()->SetDominantSense(*SightConfiguration->GetSenseImplementation());
-        GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &ANPC_Spirit_AIController::OnPlayerDetected);
-        GetPerceptionComponent()->ConfigureSense(*SightConfiguration);
+        GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &ANPC_Spirit_AIController::OnPlayerDetected); 
+		GetPerceptionComponent()->ConfigureSense(*SightConfiguration);
     }
 
 }
@@ -81,5 +88,55 @@ void ANPC_Spirit_AIController::OnPlayerDetected(AActor* DetectedActor, FAIStimul
     }
 }
 
+UAISenseConfig* ANPC_Spirit_AIController::GetPerceptionSenseConfig(AAIController* Controller, TSubclassOf<UAISense> SenseClass)
+{
+	UAISenseConfig* result = nullptr;
 
+	FAISenseID Id = UAISense::GetSenseID(SenseClass);
+	if (!Id.IsValid())
+	{
+		UE_LOG(LogTemp, Error, TEXT("GetPerceptionSenseConfig: Wrong Sense ID"));
+	}
+	else if (Controller == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("GetPerceptionSenseConfig: Controller is NULL!"));
+	}
+	else
+	{
+		UAIPerceptionComponent* Perception = Controller->GetAIPerceptionComponent();
+		if (Perception == nullptr)
+		{
+			UE_LOG(LogTemp, Error, TEXT("GetPerceptionSenseConfig: Perception is NULL!"));
+		}
+		else
+		{
+			result = Perception->GetSenseConfig(Id);
+		}
+	}
+
+	return result;
+}
+
+bool ANPC_Spirit_AIController::SetSightParameters(AAIController* Controller, float SightRange, float LoseSightOffset, float PeripheralAngle)
+{
+	UAISenseConfig* Config = GetPerceptionSenseConfig(Controller, UAISense_Sight::StaticClass());
+	if (Config == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("SetSightParams: Config is NULL!"));
+		return false;
+	}
+	else
+	{
+		UAISenseConfig_Sight* ConfigSight = Cast<UAISenseConfig_Sight>(Config);
+
+		ConfigSight->SightRadius = SightRange;
+		ConfigSight->LoseSightRadius = ConfigSight->SightRadius + LoseSightOffset;
+		ConfigSight->PeripheralVisionAngleDegrees = PeripheralAngle;
+
+		UAIPerceptionComponent* Perception = Controller->GetAIPerceptionComponent();
+		Perception->RequestStimuliListenerUpdate();
+	}
+
+	return true;
+}
 

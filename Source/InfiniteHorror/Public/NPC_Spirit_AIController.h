@@ -25,6 +25,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	static UAISenseConfig* GetPerceptionSenseConfig(AAIController* Controller, TSubclassOf<UAISense> SenseClass);
+
+	UFUNCTION(BlueprintCallable)
+	static bool SetSightParameters(AAIController* Controller, float SightRange, float LoseSightOffset, float PeripheralAngle);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -22,6 +22,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness", meta = (AllowPrivateAccess = "true"))
 	UBehaviorTree* BehaviourTree = nullptr;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness", meta = (AllowPrivateAccess = "true"))
+	float SightRadius = 2000.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness", meta = (AllowPrivateAccess = "true"))
+	float LoseSightOffset = 200.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness", meta = (AllowPrivateAccess = "true"))
+	float PeripheralVisionAngle = 75.0f;
+
 	UBehaviorTree* GetBehaviorTree();
 
 	UAnimMontage* GetAnimationMontage() const;
