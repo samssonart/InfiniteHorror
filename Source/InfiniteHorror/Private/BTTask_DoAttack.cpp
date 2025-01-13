@@ -1,4 +1,4 @@
-// Copyright (c) 2024 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
 #include "BTTask_DoAttack.h"
