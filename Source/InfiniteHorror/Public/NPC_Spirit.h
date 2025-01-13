@@ -1,4 +1,4 @@
-// Copyright (c) 2024 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 #pragma once
 
@@ -9,7 +9,9 @@
 #include "Animation/AnimMontage.h"
 #include "NPC_Spirit.generated.h"
 
-
+/*
+ * Common class for all NPC (spirits) in the game
+ */
 UCLASS()
 class INFINITEHORROR_API ANPC_Spirit : public ACharacter
 {
@@ -36,6 +38,11 @@ public:
 	UAnimMontage* GetAnimationMontage() const;
 
 	void Attack();
+	void AttackStart();
+	void AttackEnd();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collision", meta = (AllowPrivateAccess = "true"))
+	float AttackValue = 30.0f;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -51,7 +58,18 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", meta = (AllowPrivateAccess = "true"))
 	float RotationSpeed = 5.0f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collision", meta = (AllowPrivateAccess = "true"))
+	class UBoxComponent* HandCollision;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collision", meta = (AllowPrivateAccess = "true"))
+	FVector HandCollisionOffset;
+
 	ACharacter* PlayerActor;
 
 	bool IsRotating = false;
+
+	UFUNCTION()
+	void OnAttackOverlapBegin(UPrimitiveComponent* const OverlappedComponent, AActor* const OtherActor, UPrimitiveComponent* const OtherComponent, int const OtherBodyIndex, bool const FromSweep, FHitResult const& SweepResult);
+	UFUNCTION()
+	void OnAttackOverlapEnd(UPrimitiveComponent* const OverlappedComponent, AActor* const OtherActor, UPrimitiveComponent* const OtherComponent, int const OtherBodyIndex);
 };

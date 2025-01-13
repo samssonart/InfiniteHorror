@@ -1,4 +1,4 @@
-// Copyright (c) 2024 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 #pragma once
 
@@ -10,6 +10,9 @@
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
 
+/**
+ * The player character class
+ */
 UCLASS()
 class INFINITEHORROR_API APlayerCharacter : public ACharacter
 {
@@ -25,6 +28,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	float GetCurrentMentalHealth() const { return MentalHealth; }
+	void SetMentalHealth(float const NewHealth) { MentalHealth = NewHealth; }
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -34,5 +40,8 @@ private:
 	class UAIPerceptionStimuliSourceComponent* StimulusSource;
 
 	void SetupStimuli();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default", meta = (AllowPrivateAccess = "true"))
+	float MentalHealth = 100.0f;
 
 };
