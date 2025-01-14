@@ -31,10 +31,6 @@ void ANPC_Spirit_AIController::OnPossess(APawn* InPawn)
 		}
 
 		SetSightParameters(this, npc->SightRadius, npc->LoseSightOffset, npc->PeripheralVisionAngle);
-
-		FString PlayerInfo = FString::Printf(TEXT("Range: %f - Lose: %f - Angle: %f"),
-			SightConfiguration->SightRadius, SightConfiguration->LoseSightRadius, SightConfiguration->PeripheralVisionAngleDegrees);
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, PlayerInfo);
 	}
 }
 
