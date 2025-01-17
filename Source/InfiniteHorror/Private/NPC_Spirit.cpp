@@ -10,6 +10,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/BoxComponent.h"
+#include "UIWidgetController.h"
 
 // Sets default values
 ANPC_Spirit::ANPC_Spirit()
@@ -47,7 +48,6 @@ void ANPC_Spirit::OnAttackOverlapBegin(UPrimitiveComponent* const OverlappedComp
 			PlayerCharacter->SetMentalHealth(newHealth);
 		}
 	}
-	
 }
 
 void ANPC_Spirit::OnAttackOverlapEnd(UPrimitiveComponent* const OverlappedComponent, AActor* const OtherActor, UPrimitiveComponent* const OtherComponent, int const OtherBodyIndex)

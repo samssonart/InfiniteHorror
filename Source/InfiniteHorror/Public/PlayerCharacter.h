@@ -29,6 +29,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	float GetCurrentMentalHealth() const { return MentalHealth; }
+	float GetCurrentBatteryLevel() const { return BatteryLevel; }
 	void SetMentalHealth(float const NewHealth) { MentalHealth = NewHealth; }
 
 
@@ -43,5 +44,8 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default", meta = (AllowPrivateAccess = "true"))
 	float MentalHealth = 100.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default", meta = (AllowPrivateAccess = "true"))
+	float BatteryLevel = 100.0f;
 
 };
