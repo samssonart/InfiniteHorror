@@ -4,10 +4,8 @@
 #include "NPC_Spirit.h"
 #include "PlayerCharacter.h"
 #include "GameFramework/Actor.h"
-#include "Engine/World.h"
-#include "NavigationSystem.h"
+#include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/BoxComponent.h"
 #include "UIWidgetController.h"
@@ -35,7 +33,19 @@ void ANPC_Spirit::BeginPlay()
 {
 	Super::BeginPlay();
 
-	PlayerActor = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	UObject* WorldContextObj = GetWorld();
+
+	PlayerActor = UGameplayStatics::GetPlayerCharacter(WorldContextObj, 0);
+
+	// Get all UI widgets
+	TArray<UUserWidget*> FoundWidgets;
+	UWidgetBlueprintLibrary::GetAllWidgetsOfClass(WorldContextObj, FoundWidgets, UUIWidgetController::StaticClass(), false);
+
+	if (FoundWidgets.Num() > 0)
+	{
+		// Assuming you have only one instance or you want the first one found
+		WidgetController = Cast<UUIWidgetController>(FoundWidgets[0]);
+	}
 }
 
 void ANPC_Spirit::OnAttackOverlapBegin(UPrimitiveComponent* const OverlappedComponent, AActor* const OtherActor, UPrimitiveComponent* const OtherComponent, int const OtherBodyIndex, bool const FromSweep, FHitResult const& SweepResult)
@@ -53,6 +63,10 @@ void ANPC_Spirit::OnAttackOverlapBegin(UPrimitiveComponent* const OverlappedComp
 
 void ANPC_Spirit::OnAttackOverlapEnd(UPrimitiveComponent* const OverlappedComponent, AActor* const OtherActor, UPrimitiveComponent* const OtherComponent, int const OtherBodyIndex)
 {
+	if (WidgetController)
+	{
+		WidgetController->ResetVisibility(EWidgetType::MentalHealth);
+	}
 }
 
 // Called every frame

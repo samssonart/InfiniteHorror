@@ -30,15 +30,15 @@ void UUIWidgetController::NativeConstruct()
 				Widget->SetVisibility(InitialVisibility ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
 				if (Widget->GetName().Contains("Battery"))
 				{
-					FString InfoMessage = FString::Printf(TEXT("Battery Bar found on index %d"), i);
-					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, InfoMessage);
-					BatteryWidgetIndex = i;
+					/*FString InfoMessage = FString::Printf(TEXT("Battery Bar found on index %d"), i);
+					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, InfoMessage);*/
+					BatteryWidgetIndex = i - 1;
 				}
 				else if (Widget->GetName().Contains("MentalHealth"))
 				{
-					FString InfoMessage = FString::Printf(TEXT("MentalHealth Bar found on index %d"), i);
-					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, InfoMessage);
-					MentalHealthWidgetIndex = i;
+					/*FString InfoMessage = FString::Printf(TEXT("MentalHealth Bar found on index %d"), i);
+					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, InfoMessage);*/
+					MentalHealthWidgetIndex = i - 1;
 				}
 			}
 		}
@@ -52,6 +52,7 @@ void UUIWidgetController::NativeTick(const FGeometry& MyGeometry, float InDeltaT
 	for (int v = 0; v < CurrentVisibilityIndices.Num(); v++)
 	{
 		CurrentVisibilityIndices[v] -= InDeltaTime;
+		CurrentVisibilityIndices[v] = FMath::Max(CurrentVisibilityIndices[v], 0.0f);
 		UWidget* Widget = AllWidgets[v+1];
 		if (Widget)
 		{
@@ -86,7 +87,27 @@ float UUIWidgetController::UpdateBatteryPercentage()
 	return 0.0f;
 }
 
-void UUIWidgetController::ResetVisibility(int WidgetIndex)
+void UUIWidgetController::ResetVisibility(EWidgetType WidgetType)
 {
-	CurrentVisibilityIndices[WidgetIndex] = VisibilityCooldown;
+	int WidgetIndex = 0;
+	switch (WidgetType)
+	{
+		case EWidgetType::Torch:
+			WidgetIndex = BatteryWidgetIndex;
+			break;
+		case EWidgetType::MentalHealth:
+			WidgetIndex = MentalHealthWidgetIndex;
+			break;
+		default:
+			WidgetIndex = -1;
+			break;
+	}
+
+	if (WidgetIndex >= 0 && WidgetIndex < CurrentVisibilityIndices.Num())
+	{
+		//FString InfoMessage = FString::Printf(TEXT("Widget Index index %d is now %f"), WidgetIndex, VisibilityCooldown);
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, InfoMessage);
+		CurrentVisibilityIndices[WidgetIndex] = VisibilityCooldown;
+	}
 }
+

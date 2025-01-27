@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "UIWidgetController.h"
 #include "GameFramework/Character.h"
-#include "NavMesh/NavMeshBoundsVolume.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "Animation/AnimMontage.h"
 #include "NPC_Spirit.generated.h"
@@ -65,6 +65,8 @@ private:
 	FVector HandCollisionOffset;
 
 	ACharacter* PlayerActor;
+	
+	UUIWidgetController* WidgetController = nullptr;
 
 	bool IsRotating = false;
 

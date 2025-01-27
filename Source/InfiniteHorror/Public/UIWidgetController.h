@@ -8,6 +8,18 @@
 #include "UIWidgetController.generated.h"
 
 /**
+ * @brief  Enum to define the different types of widgets
+ */
+UENUM(BlueprintType)
+enum class EWidgetType : uint8
+{
+	Torch,
+	MentalHealth,
+	Undefined
+};
+
+
+/**
  * @brief  Wrapper for UI Widget to define custom behaviors
  */
 UCLASS()
@@ -20,7 +32,7 @@ public:
 	virtual void NativeConstruct() override;
 	void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	void CollectAllWidgets(TArray<UWidget*>& OutWidgets);
-	void ResetVisibility(int WidgetIndex);
+	void ResetVisibility(EWidgetType WidgetType);
 
 protected:
 
