@@ -5,6 +5,7 @@
 #include "NPC_Spirit.h"
 #include "Engine/World.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Perception/AIPerceptionComponent.h"
 #include "GameFramework/Character.h"
 #include "AIController.h"
 #include "Kismet/KismetSystemLibrary.h"

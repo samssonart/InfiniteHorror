@@ -4,12 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
-#include "GameFramework/Character.h"
 #include "Perception/AIPerceptionTypes.h"
 #include "Perception/AISenseConfig_Sight.h"
 #include "Perception/AISenseConfig_Hearing.h"
-#include "Perception/AIPerceptionComponent.h"
-#include "NavMesh/NavMeshBoundsVolume.h"
 #include "NPC_Spirit_AIController.generated.h"
 
 

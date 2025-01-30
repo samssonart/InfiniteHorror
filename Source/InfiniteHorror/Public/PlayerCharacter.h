@@ -25,8 +25,22 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	/*
+	* @brief Returns the current mental health of the player
+	* @return The current mental health of the player
+	*/
 	float GetCurrentMentalHealth() const { return MentalHealth; }
+
+	/*
+	* @brief Returns the current battery level of the torch
+	* @return The current battery level of the torch
+	*/
 	float GetCurrentBatteryLevel() const { return BatteryLevel; }
+
+	/*
+	* @bried Sets the mental health of the player
+	* @param NewHealth The value to set mental health to
+	*/
 	void SetMentalHealth(float const NewHealth) { MentalHealth = NewHealth; }
 
 
@@ -42,7 +56,7 @@ private:
 	void SetupStimuli();
 	void ToggleTorch();
 
-	UUIWidgetController* WidgetController = nullptr;
+	TObjectPtr<UUIWidgetController> WidgetController = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default", meta = (AllowPrivateAccess = "true"))
 	bool bIsTorchOn = false;

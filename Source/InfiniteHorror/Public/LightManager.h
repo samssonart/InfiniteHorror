@@ -15,10 +15,23 @@ class INFINITEHORROR_API ALightManager : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ALightManager();
+
+	/*
+	* @brief Reference to the scene's main light
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Main Light Intensity")
-	ALight* MainLight;
+	TObjectPtr<ALight> MainLight;
+
+	/*
+	* @brief The light intensity for gameplay
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Main Light Intensity")
 	float GameIntensity;
+
+	/*
+	* @brief The light intensity for the editor. Gameplay is usually a very low value that makes it hard to see in the editor
+	* @see GameIntensity
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Main Light Intensity")
 	float EditorIntensity;
 

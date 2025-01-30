@@ -21,9 +21,20 @@ public:
 	explicit UBTTask_GetRandomLocation(FObjectInitializer const& ObjectInitializer);
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
-	UNavigationSystemV1* NavSystem;
+	/*
+	* @brief Reference to the scene's navigation system
+	*/
+	TObjectPtr<UNavigationSystemV1> NavSystem;
+
+	/*
+	* @brief Whether the navigation system has been set
+	* @see NavSystem
+	*/
 	bool NavigationInvokerSet = false;
 
+	/*
+	* @brief The radius within which to search for a random location
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta=(AllowPrivateAccess="true"))
 	float SearchRadius = 15.0f;
 	

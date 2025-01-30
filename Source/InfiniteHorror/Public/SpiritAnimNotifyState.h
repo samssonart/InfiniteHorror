@@ -8,7 +8,7 @@
 #include "SpiritAnimNotifyState.generated.h"
 
 /**
- * Event notifier for the spirit's animations
+ * @brief Event notifier for the spirit's animations
  */
 UCLASS()
 class INFINITEHORROR_API USpiritAnimNotifyState : public UAnimNotifyState

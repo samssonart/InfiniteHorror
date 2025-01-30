@@ -17,11 +17,21 @@ public:
 	// Sets default values for this actor's properties
 	AFoliageManager();
 
+	/*
+	* @brief The actual PFG component
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PFG")
-	UProceduralFoliageComponent* ProceduralFoliageGenerator;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PFG")
-	AActor* ProceduralFoliageVolume;
+	TObjectPtr<UProceduralFoliageComponent> ProceduralFoliageGenerator;
 
+	/*
+	* @brief The actor that contains the procedural foliage volume
+	*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PFG")
+	TObjectPtr<AActor> ProceduralFoliageVolume;
+
+	/*
+	* @brief The foliage info
+	*/
 	FFoliageInfo FoliageInfo;
 
 protected:

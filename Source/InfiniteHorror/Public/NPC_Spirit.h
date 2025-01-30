@@ -21,26 +21,61 @@ public:
 	// Sets default values for this character's properties
 	explicit ANPC_Spirit();
 
+	/*
+	* @bried The behavior tree that the NPC' will follow's AI controller will use
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness", meta = (AllowPrivateAccess = "true"))
-	UBehaviorTree* BehaviourTree = nullptr;
+	TObjectPtr<UBehaviorTree>  BehaviourTree = nullptr;
 
+	/*
+	* @brief The radius of the NPC's sight
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness", meta = (AllowPrivateAccess = "true"))
 	float SightRadius = 2000.0f;
 
+	/*
+	* @brief The radius beyond which the NPC will lose sight of the player
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness", meta = (AllowPrivateAccess = "true"))
 	float LoseSightOffset = 200.0f;
 
+	/*
+	* @brief The angle of the NPC's peripheral vision
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness", meta = (AllowPrivateAccess = "true"))
 	float PeripheralVisionAngle = 75.0f;
 
+	/*
+	* @brief Returns the behavior tree
+	* @return The behavior tree
+	* @see BehaviourTree
+	*/
 	UBehaviorTree* GetBehaviorTree();
 
+	/*
+	* @brief Returns the animation montage
+	* @return The animation montage
+	*/
 	UAnimMontage* GetAnimationMontage() const;
 
+	/*
+	* @bried Performs the NPC attack
+	*/
 	void Attack();
+
+	/*
+	* @brief Receives the message that the NPC should attack
+	*/
 	void AttackStart();
+
+	/*
+	* @brief Receives the message that the NPC's attack animation finished
+	*/
 	void AttackEnd();
 
+	/*
+	* @brief The amount of damage the NPC's attack will cause
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collision", meta = (AllowPrivateAccess = "true"))
 	float AttackValue = 30.0f;
 
@@ -53,7 +88,7 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", meta = (AllowPrivateAccess = "true"))
-	UAnimMontage* AnimationMontage;
+	TObjectPtr<UAnimMontage>  AnimationMontage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", meta = (AllowPrivateAccess = "true"))
 	float RotationSpeed = 5.0f;
@@ -64,9 +99,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collision", meta = (AllowPrivateAccess = "true"))
 	FVector HandCollisionOffset;
 
-	ACharacter* PlayerActor;
+	TObjectPtr<ACharacter> PlayerActor;
 	
-	UUIWidgetController* WidgetController = nullptr;
+	TObjectPtr<UUIWidgetController> WidgetController = nullptr;
 
 	bool IsRotating = false;
 
