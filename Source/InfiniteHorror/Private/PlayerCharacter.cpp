@@ -43,6 +43,10 @@ void APlayerCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (bIsTorchOn)
 	{
+		if (WidgetController)
+		{
+			WidgetController->ResetVisibility(EWidgetType::Torch);
+		}
 		BatteryLevel -= DeltaTime * BatteryDepletionRate;
 		if (BatteryLevel <= 0.0f)
 		{
@@ -76,11 +80,6 @@ void APlayerCharacter::SetupStimuli()
 
 void APlayerCharacter::ToggleTorch()
 {
-	if (WidgetController)
-	{
-		WidgetController->ResetVisibility(EWidgetType::Torch);
-	}
-
 	if (BatteryLevel > 0)
 	{
 		bIsTorchOn = !bIsTorchOn;
