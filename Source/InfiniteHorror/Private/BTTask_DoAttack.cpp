@@ -17,11 +17,18 @@ UBTTask_DoAttack::UBTTask_DoAttack()
 
 EBTNodeResult::Type UBTTask_DoAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	bool withinRange = OwnerComp.GetBlackboardComponent()->GetValueAsBool(GetSelectedBlackboardKey());
+	TObjectPtr<UBlackboardComponent> BBComp = OwnerComp.GetBlackboardComponent();
+
+	if (!BBComp)
+	{
+		return EBTNodeResult::Failed;
+	}
+
+	bool withinRange = BBComp->GetValueAsBool(GetSelectedBlackboardKey());
 	if (!withinRange)
 	{
-		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
-		return EBTNodeResult::Succeeded;
+		FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
+		return EBTNodeResult::Failed;
 	}
 
 	ANPC_Spirit* const npc = Cast<ANPC_Spirit>(OwnerComp.GetAIOwner()->GetPawn());
@@ -29,10 +36,12 @@ EBTNodeResult::Type UBTTask_DoAttack::ExecuteTask(UBehaviorTreeComponent& OwnerC
 	if (npc && HasMontageFinishedPlaying(npc))
 	{
 		npc->Attack();
+		BBComp->SetValueAsBool(AttackCompletedKey, true);
+		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+		return EBTNodeResult::Type();
 	}
 
-	FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
-	return EBTNodeResult::Type();
+	return EBTNodeResult::InProgress;
 }
 
 bool UBTTask_DoAttack::HasMontageFinishedPlaying(ANPC_Spirit* const NPC)

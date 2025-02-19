@@ -25,5 +25,12 @@ public:
 private:
 	
 	bool HasMontageFinishedPlaying(ANPC_Spirit* const NPC);
+
+	/*
+	* @brief The name of the BB key that sets the state to attack completed
+	*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	FName AttackCompletedKey = "NPCAttacked";
+
 	
 };
