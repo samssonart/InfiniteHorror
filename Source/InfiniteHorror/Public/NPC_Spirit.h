@@ -21,6 +21,8 @@ public:
 	// Sets default values for this character's properties
 	explicit ANPC_Spirit();
 
+	bool bHasNPCAttacked = false;
+
 	/*
 	* @bried The behavior tree that the NPC' will follow's AI controller will use
 	*/
@@ -44,6 +46,12 @@ public:
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness", meta = (AllowPrivateAccess = "true"))
 	float PeripheralVisionAngle = 75.0f;
+
+	/*
+	* @brief The amount of damage the NPC's attack will cause
+	*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collision", meta = (AllowPrivateAccess = "true"))
+	float AttackValue = 30.0f;
 
 	/*
 	* @brief Returns the behavior tree
@@ -72,12 +80,6 @@ public:
 	* @brief Receives the message that the NPC's attack animation finished
 	*/
 	void AttackEnd();
-
-	/*
-	* @brief The amount of damage the NPC's attack will cause
-	*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collision", meta = (AllowPrivateAccess = "true"))
-	float AttackValue = 30.0f;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

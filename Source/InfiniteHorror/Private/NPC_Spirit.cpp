@@ -123,6 +123,7 @@ void ANPC_Spirit::AttackEnd()
 {
 	HandCollision->SetCollisionProfileName("SpiritHand");
 	HandCollision->SetNotifyRigidBodyCollision(false);
+	bHasNPCAttacked = true;
 }
 
 
