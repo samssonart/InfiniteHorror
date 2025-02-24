@@ -50,7 +50,7 @@ void ANPC_Spirit::BeginPlay()
 
 void ANPC_Spirit::OnAttackOverlapBegin(UPrimitiveComponent* const OverlappedComponent, AActor* const OtherActor, UPrimitiveComponent* const OtherComponent, int const OtherBodyIndex, bool const FromSweep, FHitResult const& SweepResult)
 {
-	if (OtherActor != this)
+	if (OtherActor != this && bIsNPCInAttackMode)
 	{
 		if (APlayerCharacter* const PlayerCharacter = Cast<APlayerCharacter>(OtherActor))
 		{
@@ -115,6 +115,7 @@ void ANPC_Spirit::Attack()
 
 void ANPC_Spirit::AttackStart()
 {
+	bIsNPCInAttackMode = true;
 	HandCollision->SetCollisionProfileName("SpiritHand");
 	HandCollision->SetNotifyRigidBodyCollision(true);
 }
@@ -123,6 +124,7 @@ void ANPC_Spirit::AttackEnd()
 {
 	HandCollision->SetCollisionProfileName("SpiritHand");
 	HandCollision->SetNotifyRigidBodyCollision(false);
+	bIsNPCInAttackMode = false;
 	bHasNPCAttacked = true;
 }
 

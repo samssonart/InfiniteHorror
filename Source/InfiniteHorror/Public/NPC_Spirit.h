@@ -21,6 +21,14 @@ public:
 	// Sets default values for this character's properties
 	explicit ANPC_Spirit();
 
+	/*
+	* @brief Whether the NPC has detected the player and is within attack distance
+	*/
+	bool bIsNPCInAttackMode = false;
+
+	/*
+	* @brief Whether the NPC has already attacked the player
+	*/
 	bool bHasNPCAttacked = false;
 
 	/*
