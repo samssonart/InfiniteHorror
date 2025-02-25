@@ -27,13 +27,19 @@ private:
 	* @brief The paths of the NPCs that can be spawned.
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPCs", meta = (AllowPrivateAccess = "true"))
-	TArray<FString> NPCPaths;
+	TArray<TSubclassOf<ANPC_Spirit>> NPCRefs;
 
 	/*
 	* @brief The pool of NPCs that can be spawned.
 	*/
 	TArray<TObjectPtr<ANPC_Spirit>> NPCPool;
 
+	/*
+	* @brief The radius of the NPC's sight
+	*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPCs", meta = (AllowPrivateAccess = "true"))
+	float NPCHeightOffset = 90.0f;
+	
 	/*
 	* @brief The radius in which NPCs can spawn around the player.
 	*/
@@ -65,6 +71,6 @@ private:
 	* @biefs Spawns an NPC blueprint from a its game path.
 	* @return The spawned NPC.
 	*/
-	ANPC_Spirit* SpawnNPCFromBlueprintPath(UWorld* World, const FString BlueprintPath, const FVector& Location, const FRotator& Rotation);
+	ANPC_Spirit* SpawnNPCFromSubclassRef(UWorld* World, const int NPCIndex, const FVector& Location, const FRotator& Rotation);
 
 };

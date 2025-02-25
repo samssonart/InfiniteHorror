@@ -40,6 +40,12 @@ public:
 	/*
 	* @brief The radius of the NPC's sight
 	*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "World Setup", meta = (AllowPrivateAccess = "true"))
+	float NPCHeight = 100.0f;
+	
+	/*
+	* @brief The radius of the NPC's sight
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness", meta = (AllowPrivateAccess = "true"))
 	float SightRadius = 2000.0f;
 

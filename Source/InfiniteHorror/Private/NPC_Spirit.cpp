@@ -36,16 +36,6 @@ void ANPC_Spirit::BeginPlay()
 	UObject* WorldContextObj = GetWorld();
 
 	PlayerActor = UGameplayStatics::GetPlayerCharacter(WorldContextObj, 0);
-
-	// Get all UI widgets
-	TArray<UUserWidget*> FoundWidgets;
-	UWidgetBlueprintLibrary::GetAllWidgetsOfClass(WorldContextObj, FoundWidgets, UUIWidgetController::StaticClass(), false);
-
-	if (FoundWidgets.Num() > 0)
-	{
-		// Assuming you have only one instance or you want the first one found
-		WidgetController = Cast<UUIWidgetController>(FoundWidgets[0]);
-	}
 }
 
 void ANPC_Spirit::OnAttackOverlapBegin(UPrimitiveComponent* const OverlappedComponent, AActor* const OtherActor, UPrimitiveComponent* const OtherComponent, int const OtherBodyIndex, bool const FromSweep, FHitResult const& SweepResult)
@@ -66,6 +56,22 @@ void ANPC_Spirit::OnAttackOverlapEnd(UPrimitiveComponent* const OverlappedCompon
 	if (WidgetController)
 	{
 		WidgetController->ResetVisibility(EWidgetType::MentalHealth);
+	}
+	else
+	{
+		// Get all UI widgets
+		TArray<UUserWidget*> FoundWidgets;
+		UWidgetBlueprintLibrary::GetAllWidgetsOfClass(GetWorld(), FoundWidgets, UUIWidgetController::StaticClass(), false);
+
+		if (FoundWidgets.Num() > 0)
+		{
+			// Assuming you have only one instance or you want the first one found
+			WidgetController = Cast<UUIWidgetController>(FoundWidgets[0]);
+			if (WidgetController)
+			{
+				WidgetController->ResetVisibility(EWidgetType::MentalHealth);
+			}
+		}
 	}
 }
 
