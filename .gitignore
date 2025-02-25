@@ -70,3 +70,8 @@ Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+.idea/.idea.InfiniteHorror/.idea/.gitignore
+.idea/.idea.InfiniteHorror/.idea/encodings.xml
+.idea/.idea.InfiniteHorror/.idea/indexLayout.xml
+.idea/.idea.InfiniteHorror/.idea/vcs.xml
+InfiniteHorror.sln.DotSettings.user
