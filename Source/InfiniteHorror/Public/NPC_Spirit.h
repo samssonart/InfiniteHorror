@@ -9,6 +9,8 @@
 #include "Animation/AnimMontage.h"
 #include "NPC_Spirit.generated.h"
 
+class ANPCFactory;
+
 /*
  * Common class for all NPC (spirits) in the game
  */
@@ -118,6 +120,8 @@ private:
 	TObjectPtr<ACharacter> PlayerActor;
 	
 	TObjectPtr<UUIWidgetController> WidgetController = nullptr;
+
+	TObjectPtr<ANPCFactory> NPCFactoryRef = nullptr;
 
 	bool IsRotating = false;
 

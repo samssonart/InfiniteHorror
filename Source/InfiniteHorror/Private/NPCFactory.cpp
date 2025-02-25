@@ -6,14 +6,32 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Engine/Engine.h"
 #include "GameFramework/Actor.h"
-#include "NPC_Spirit_AIController.h"
+
+float NPCRespawnTimer = -1.0f;
 
 // Sets default values
 ANPCFactory::ANPCFactory()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+}
 
+void ANPCFactory::ResetSpawnState()
+{
+	bIsNPCInPlay = false;
+	NPCRespawnTimer = FMath::RandRange(1.0f,NPCReSpawnDelay);
+}
+
+void ANPCFactory::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if (!bIsNPCInPlay)
+	{
+		NPCRespawnTimer -= DeltaTime;
+		if (NPCRespawnTimer <= 0 && PlayerActor && NPCRefs.Num() > 0)
+		{
+			SpawnNPC(FMath::RandRange(0, NPCRefs.Num() - 1));
+		}
+	}
 }
 
 // Called when the game starts

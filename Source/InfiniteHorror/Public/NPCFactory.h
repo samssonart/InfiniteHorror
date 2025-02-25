@@ -17,6 +17,15 @@ public:
 	// Sets default values for this actor's properties
 	ANPCFactory();
 
+	/*
+	 *@brief Leaves the factory ready to spawn another NPC.
+	 */
+	UFUNCTION(BlueprintCallable)
+	void ResetSpawnState();
+	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 protected:
 	// Called when the game starts or when spawned.
 	virtual void BeginPlay() override;
@@ -45,6 +54,12 @@ private:
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPCs", meta = (AllowPrivateAccess = "true"))
 	float NPCSpawnRadius = 500.0f;
+
+	/*
+	* @brief The max wait time after a NPC is destroyed to spawn another, in seconds.
+	*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPCs", meta = (AllowPrivateAccess = "true"))
+	float NPCReSpawnDelay = 5.0f;
 
 	/*
 	* @brief Reference to the player character.

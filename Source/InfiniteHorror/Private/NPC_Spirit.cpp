@@ -2,6 +2,7 @@
 
 
 #include "NPC_Spirit.h"
+#include "NPCFactory.h"
 #include "PlayerCharacter.h"
 #include "GameFramework/Actor.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
@@ -72,6 +73,16 @@ void ANPC_Spirit::OnAttackOverlapEnd(UPrimitiveComponent* const OverlappedCompon
 				WidgetController->ResetVisibility(EWidgetType::MentalHealth);
 			}
 		}
+	}
+
+	if (!NPCFactoryRef)
+	{
+		NPCFactoryRef = Cast<ANPCFactory>(UGameplayStatics::GetActorOfClass(GetWorld(), ANPCFactory::StaticClass()));
+	}
+	
+	if (NPCFactoryRef)
+	{
+		NPCFactoryRef->ResetSpawnState();
 	}
 }
 
