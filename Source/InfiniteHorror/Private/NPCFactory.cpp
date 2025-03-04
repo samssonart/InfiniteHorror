@@ -37,6 +37,7 @@ void ANPCFactory::Tick(float DeltaTime)
 // Called when the game starts
 void ANPCFactory::BeginPlay()
 {
+	Super::BeginPlay();
 	PlayerActor = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 
 	if (PlayerActor && NPCRefs.Num() > 0)
@@ -69,14 +70,7 @@ void ANPCFactory::SpawnNPC(int NPCIndex)
 		SpawnLocation.Z = TerrainHeight + NPCHeightOffset; 
 		FRotator SpawnRotation = PlayerActor->GetActorRotation();
 
-		if (!NPCPool.IsEmpty() && NPCPool.Num() >= NPCIndex)
-		{
-			NPCInPlay = NPCPool[NPCIndex];
-		}
-		else
-		{
-			NPCInPlay = SpawnNPCFromSubclassRef(GetWorld(), NPCIndex, SpawnLocation, SpawnRotation);
-		}
+		NPCInPlay = SpawnNPCFromSubclassRef(GetWorld(), NPCIndex, SpawnLocation, SpawnRotation);
 		
 		if (NPCInPlay)
 		{

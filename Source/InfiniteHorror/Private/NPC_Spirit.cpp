@@ -39,6 +39,20 @@ void ANPC_Spirit::BeginPlay()
 	PlayerActor = UGameplayStatics::GetPlayerCharacter(WorldContextObj, 0);
 }
 
+void ANPC_Spirit::Destroyed()
+{
+	Super::Destroyed();
+	if (!NPCFactoryRef)
+	{
+		NPCFactoryRef = Cast<ANPCFactory>(UGameplayStatics::GetActorOfClass(GetWorld(), ANPCFactory::StaticClass()));
+	}
+	
+	if (NPCFactoryRef)
+	{
+		NPCFactoryRef->ResetSpawnState();
+	}
+}
+
 void ANPC_Spirit::OnAttackOverlapBegin(UPrimitiveComponent* const OverlappedComponent, AActor* const OtherActor, UPrimitiveComponent* const OtherComponent, int const OtherBodyIndex, bool const FromSweep, FHitResult const& SweepResult)
 {
 	if (OtherActor != this && bIsNPCInAttackMode)
@@ -73,16 +87,6 @@ void ANPC_Spirit::OnAttackOverlapEnd(UPrimitiveComponent* const OverlappedCompon
 				WidgetController->ResetVisibility(EWidgetType::MentalHealth);
 			}
 		}
-	}
-
-	if (!NPCFactoryRef)
-	{
-		NPCFactoryRef = Cast<ANPCFactory>(UGameplayStatics::GetActorOfClass(GetWorld(), ANPCFactory::StaticClass()));
-	}
-	
-	if (NPCFactoryRef)
-	{
-		NPCFactoryRef->ResetSpawnState();
 	}
 }
 
