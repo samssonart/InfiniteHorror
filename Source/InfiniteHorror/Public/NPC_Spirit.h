@@ -34,6 +34,11 @@ public:
 	bool bHasNPCAttacked = false;
 
 	/*
+	* @brief The static mesh components present in the NPC blueprint
+	*/
+	TArray<UStaticMeshComponent*> StaticMeshComponents;
+
+	/*
 	* @bried The behavior tree that the NPC' will follow's AI controller will use
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Awareness", meta = (AllowPrivateAccess = "true"))
@@ -70,6 +75,12 @@ public:
 	float AttackValue = 30.0f;
 
 	/*
+	* @brief The amount of time the dissolve transition needs to complete, in seconds
+	*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPC Setup", meta = (AllowPrivateAccess = "true"))
+	float DissolveDuration = 6.0f;
+
+	/*
 	* @brief Returns the behavior tree
 	* @return The behavior tree
 	* @see BehaviourTree
@@ -96,6 +107,16 @@ public:
 	* @brief Receives the message that the NPC's attack animation finished
 	*/
 	void AttackEnd();
+
+	/*
+	* @brief Starts the dissolve transition
+	*/
+	void StartDissolve();
+
+	/*
+	* @brief Modifies all materials in the NPC to create the dissolve transition
+	*/
+	void SetDissolveAmount(float DissolveAmount);
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

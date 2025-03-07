@@ -4,11 +4,14 @@
 #include "NPC_Spirit.h"
 #include "NPCFactory.h"
 #include "PlayerCharacter.h"
+#include "NPCDissolveLatentAction.h"
 #include "GameFramework/Actor.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/BoxComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "Materials/MaterialInstanceDynamic.h"
 #include "UIWidgetController.h"
 
 // Sets default values
@@ -27,6 +30,8 @@ ANPC_Spirit::ANPC_Spirit()
 		HandCollision->OnComponentBeginOverlap.AddDynamic(this, &ANPC_Spirit::OnAttackOverlapBegin);
 		HandCollision->OnComponentEndOverlap.AddDynamic(this, &ANPC_Spirit::OnAttackOverlapEnd);
 	}
+
+	GetComponents<UStaticMeshComponent>(StaticMeshComponents);
 }
 
 // Called when the game starts or when spawned
@@ -147,6 +152,42 @@ void ANPC_Spirit::AttackEnd()
 	HandCollision->SetNotifyRigidBodyCollision(false);
 	bIsNPCInAttackMode = false;
 	bHasNPCAttacked = true;
+}
+
+void ANPC_Spirit::StartDissolve()
+{
+	int id = FMath::RandRange(0, 1000000);
+	GetWorld()->GetLatentActionManager().AddNewAction(this, id, new NPCDissolveLatentAction(id, 5.0f, GetWorld()->DeltaTimeSeconds));
+}
+
+void ANPC_Spirit::SetDissolveAmount(float const DissolveAmount)
+{
+	for (TObjectPtr<UStaticMeshComponent> MeshComponent : StaticMeshComponents)
+	{
+		int32 MaterialCount = MeshComponent->GetNumMaterials();
+		for (int32 i = 0; i < MaterialCount; i++)
+		{
+			TObjectPtr<UMaterialInterface> Material = MeshComponent->GetMaterial(i);
+			if (Material)
+			{
+				// Create a dynamic material instance
+				UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(Material, this);
+				if (DynamicMaterial)
+				{
+					// Set the dissolve amount
+					DynamicMaterial->SetScalarParameterValue(FName("FadeToBlackValue"), DissolveAmount);
+
+					// Apply the dynamic material instance to the mesh component
+					MeshComponent->SetMaterial(i, DynamicMaterial);
+				}
+			}
+		}
+	}
+
+	if (DissolveAmount >= 1.0f)
+	{
+		this->Destroy();
+	}
 }
 
 

@@ -27,7 +27,7 @@ EBTNodeResult::Type UBTTask_NPCDissolve::ExecuteTask(UBehaviorTreeComponent& Own
 		{
 			// FString InfoMessage = FString::Printf(TEXT("My work here is done... *dissolves*"));
 			// GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, InfoMessage);
-			npc->Destroy();
+			npc->StartDissolve();
 		}
 		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 		return EBTNodeResult::Succeeded;
