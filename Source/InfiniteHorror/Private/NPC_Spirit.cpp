@@ -9,10 +9,13 @@
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Kismet/KismetMaterialLibrary.h"
 #include "Components/BoxComponent.h"
-#include "Components/StaticMeshComponent.h"
-#include "Materials/MaterialInstanceDynamic.h"
+#include "Materials/MaterialParameterCollection.h"
 #include "UIWidgetController.h"
+#include "Materials/MaterialParameterCollectionInstance.h"
+
+TObjectPtr<UObject> WorldContextObj;
 
 // Sets default values
 ANPC_Spirit::ANPC_Spirit()
@@ -30,8 +33,6 @@ ANPC_Spirit::ANPC_Spirit()
 		HandCollision->OnComponentBeginOverlap.AddDynamic(this, &ANPC_Spirit::OnAttackOverlapBegin);
 		HandCollision->OnComponentEndOverlap.AddDynamic(this, &ANPC_Spirit::OnAttackOverlapEnd);
 	}
-
-	GetComponents<UStaticMeshComponent>(StaticMeshComponents);
 }
 
 // Called when the game starts or when spawned
@@ -39,9 +40,15 @@ void ANPC_Spirit::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UObject* WorldContextObj = GetWorld();
+	WorldContextObj = GEngine->GetWorld();
 
 	PlayerActor = UGameplayStatics::GetPlayerCharacter(WorldContextObj, 0);
+
+	if (MaterialParameterCollection)
+	{
+		MPC_Instance = GetWorld()->GetParameterCollectionInstance(MaterialParameterCollection);
+	}
+	NPCFactoryRef = Cast<ANPCFactory>(UGameplayStatics::GetActorOfClass(GetWorld(), ANPCFactory::StaticClass()));
 }
 
 void ANPC_Spirit::Destroyed()
@@ -81,11 +88,10 @@ void ANPC_Spirit::OnAttackOverlapEnd(UPrimitiveComponent* const OverlappedCompon
 	{
 		// Get all UI widgets
 		TArray<UUserWidget*> FoundWidgets;
-		UWidgetBlueprintLibrary::GetAllWidgetsOfClass(GetWorld(), FoundWidgets, UUIWidgetController::StaticClass(), false);
+		UWidgetBlueprintLibrary::GetAllWidgetsOfClass(WorldContextObj, FoundWidgets, UUIWidgetController::StaticClass(), false);
 
 		if (FoundWidgets.Num() > 0)
 		{
-			// Assuming you have only one instance or you want the first one found
 			WidgetController = Cast<UUIWidgetController>(FoundWidgets[0]);
 			if (WidgetController)
 			{
@@ -156,32 +162,29 @@ void ANPC_Spirit::AttackEnd()
 
 void ANPC_Spirit::StartDissolve()
 {
-	int id = FMath::RandRange(0, 1000000);
-	GetWorld()->GetLatentActionManager().AddNewAction(this, id, new NPCDissolveLatentAction(id, 5.0f, GetWorld()->DeltaTimeSeconds));
+	if (!bIsNPCDissolving)
+	{
+		bIsNPCDissolving = true;
+		int id = FMath::RandRange(0, 1000000);
+		GetWorld()->GetLatentActionManager().AddNewAction(this, id,
+        		new NPCDissolveLatentAction(id, 5.0f, GetWorld()->DeltaTimeSeconds, this));
+	}
+	
 }
 
 void ANPC_Spirit::SetDissolveAmount(float const DissolveAmount)
 {
-	for (TObjectPtr<UStaticMeshComponent> MeshComponent : StaticMeshComponents)
+	if (MPC_Instance)
 	{
-		int32 MaterialCount = MeshComponent->GetNumMaterials();
-		for (int32 i = 0; i < MaterialCount; i++)
-		{
-			TObjectPtr<UMaterialInterface> Material = MeshComponent->GetMaterial(i);
-			if (Material)
-			{
-				// Create a dynamic material instance
-				UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(Material, this);
-				if (DynamicMaterial)
-				{
-					// Set the dissolve amount
-					DynamicMaterial->SetScalarParameterValue(FName("FadeToBlackValue"), DissolveAmount);
-
-					// Apply the dynamic material instance to the mesh component
-					MeshComponent->SetMaterial(i, DynamicMaterial);
-				}
-			}
-		}
+		//bool setSucceeded =
+		MPC_Instance->SetScalarParameterValue(FName("DissolveAmount"), DissolveAmount);
+		// if (setSucceeded)
+		// {
+		// 	float currentDAValue;
+		// 	MPC_Instance->GetScalarParameterValue(FName("DissolveAmount"), currentDAValue);
+		// 	GEngine->AddOnScreenDebugMessage(-1, 0.01f, FColor::Yellow,
+		// 		FString::Printf(TEXT("DissolveAmount is now %f"),currentDAValue));
+		// }
 	}
 
 	if (DissolveAmount >= 1.0f)

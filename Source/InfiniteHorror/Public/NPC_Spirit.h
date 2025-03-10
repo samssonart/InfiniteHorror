@@ -34,9 +34,9 @@ public:
 	bool bHasNPCAttacked = false;
 
 	/*
-	* @brief The static mesh components present in the NPC blueprint
+	* @brief Whether the NPC has already attacked the player
 	*/
-	TArray<UStaticMeshComponent*> StaticMeshComponents;
+	bool bIsNPCDissolving = false;
 
 	/*
 	* @bried The behavior tree that the NPC' will follow's AI controller will use
@@ -79,6 +79,17 @@ public:
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPC Setup", meta = (AllowPrivateAccess = "true"))
 	float DissolveDuration = 6.0f;
+
+	/*
+	 * @brief Reference to the Material Parameter Collection
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPC Setup", meta = (AllowPrivateAccess = "true"))
+	UMaterialParameterCollection* MaterialParameterCollection;
+
+	/*
+	 *@brief The actual instance of the Material Parameter Collection
+	 */
+	TObjectPtr<UMaterialParameterCollectionInstance> MPC_Instance;
 
 	/*
 	* @brief Returns the behavior tree

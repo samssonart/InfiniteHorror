@@ -22,10 +22,15 @@ protected:
 	float _elapsedTime;
 	float& _deltaTime;
 	float _transitionRatio = 0.0f;
+	TObjectPtr<AActor> _NPCActor;
 
 public:
 
-	NPCDissolveLatentAction(int id, float totalTime, float& deltaTime) : _id(id), _totalTime(totalTime), _deltaTime(deltaTime), _elapsedTime(0.0f) { Initialize(); };
+	NPCDissolveLatentAction(int id, float totalTime, float& deltaTime, AActor* ActorToDissolve)
+	: _id(id), _totalTime(totalTime), _deltaTime(deltaTime), _NPCActor(ActorToDissolve), _elapsedTime(0.0f)
+	{
+		Initialize();
+	};
 
 	void Initialize();
 

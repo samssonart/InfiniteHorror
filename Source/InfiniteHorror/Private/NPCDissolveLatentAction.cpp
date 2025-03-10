@@ -1,10 +1,8 @@
 #include "NPCDissolveLatentAction.h"
-#include "Kismet/GameplayStatics.h"
-
 
 void NPCDissolveLatentAction::Initialize()
 {
-	_npcSpirit = Cast<ANPC_Spirit>(UGameplayStatics::GetActorOfClass(GEngine->GetWorld(), ANPC_Spirit::StaticClass()));
+	_npcSpirit = Cast<ANPC_Spirit>(_NPCActor);
 }
 
 void NPCDissolveLatentAction::UpdateOperation(FLatentResponse& Response)
