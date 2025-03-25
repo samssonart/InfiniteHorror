@@ -4,6 +4,8 @@
 #include "FoliageManager.h"
 #include "Kismet/GameplayStatics.h"
 #include "InstancedFoliage.h"
+#include "GameFramework/Character.h"
+#include "Materials/MaterialParameterCollectionInstance.h"
 
 void AddFoliageInstancesCallback(const TArray<FDesiredFoliageInstance>& Instances)
 {
@@ -45,12 +47,35 @@ void AFoliageManager::BeginPlay()
             UE_LOG(LogTemp, Log, TEXT("Foliage generation successful"));
         }
     }
+
+    _mainCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+    if (_mainCharacter)
+    {
+        _previousPlayerFogPosition = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)->GetActorLocation();
+    }
+    if (MaterialParameterCollection)
+    {
+        _MPC_Instance = GetWorld()->GetParameterCollectionInstance(MaterialParameterCollection);
+    }
+
+    if(_MPC_Instance)
+    {
+        _MPC_Instance->SetVectorParameterValue(FName("FogCenter"), _previousPlayerFogPosition);
+    }
 }
 
 // Called every frame
 void AFoliageManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+    if (_mainCharacter && _MPC_Instance)
+    {
+        _fogSqrDisplacement = FVector::DistSquared(_mainCharacter->GetActorLocation(), _previousPlayerFogPosition);
+        if (_fogSqrDisplacement > MaxFogRecenterDistanceSqr)
+        {
+            _previousPlayerFogPosition = _mainCharacter->GetActorLocation();
+            _MPC_Instance->SetVectorParameterValue(FName("FogCenter"), _previousPlayerFogPosition);
+        }
+    }
 }
 
