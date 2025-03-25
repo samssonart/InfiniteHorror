@@ -48,6 +48,12 @@ void ANPC_Spirit::BeginPlay()
 	{
 		MPC_Instance = GetWorld()->GetParameterCollectionInstance(MaterialParameterCollection);
 	}
+
+	if (MPC_Instance)
+	{
+		MPC_Instance->SetScalarParameterValue(FName("DissolveAmount"), 0.0f);
+	}
+	
 	NPCFactoryRef = Cast<ANPCFactory>(UGameplayStatics::GetActorOfClass(GetWorld(), ANPCFactory::StaticClass()));
 }
 
@@ -88,7 +94,7 @@ void ANPC_Spirit::OnAttackOverlapEnd(UPrimitiveComponent* const OverlappedCompon
 	{
 		// Get all UI widgets
 		TArray<UUserWidget*> FoundWidgets;
-		UWidgetBlueprintLibrary::GetAllWidgetsOfClass(WorldContextObj, FoundWidgets, UUIWidgetController::StaticClass(), false);
+		UWidgetBlueprintLibrary::GetAllWidgetsOfClass(GetWorld(), FoundWidgets, UUIWidgetController::StaticClass(), false);
 
 		if (FoundWidgets.Num() > 0)
 		{
