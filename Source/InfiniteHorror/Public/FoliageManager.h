@@ -18,6 +18,18 @@ public:
 	AFoliageManager();
 
 	/*
+	 *@brief The pool of different terrain patches to spawn
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Terrain")
+	TArray<TSubclassOf<AActor>> TerrainPatchPool;
+
+	/*
+	 *@brief The relative squared distance of the player to spawn a new terrain patch
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Terrain")
+	float SpawnDistanceThreshold = 5000.0f;
+
+	/*
 	* @brief The actual PFG component
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PFG")
@@ -53,9 +65,12 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-private:	
+private:
+	void SpawnPatchAtLocation(FVector Location);
+	
 	float _fogSqrDisplacement = 0.0f;
 	FVector _previousPlayerFogPosition;
 	TObjectPtr<ACharacter> _mainCharacter;
 	TObjectPtr<UMaterialParameterCollectionInstance> _MPC_Instance;
+	TObjectPtr<AActor> _currentTerrainPatch;
 };

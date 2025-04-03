@@ -7,6 +7,10 @@
 #include "GameFramework/Character.h"
 #include "Materials/MaterialParameterCollectionInstance.h"
 
+
+FVector _playerPosition;
+FVector _terrainLocation;
+
 void AddFoliageInstancesCallback(const TArray<FDesiredFoliageInstance>& Instances)
 {
     // Not sure what to do here
@@ -17,7 +21,6 @@ AFoliageManager::AFoliageManager()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 // Called when the game starts or when spawned
@@ -64,17 +67,38 @@ void AFoliageManager::BeginPlay()
     }
 }
 
+void AFoliageManager::SpawnPatchAtLocation(FVector Location)
+{
+    if (TerrainPatchPool.Num() > 0)
+    {
+        int32 PatchIndex = FMath::RandRange(0, TerrainPatchPool.Num() - 1);
+        GetWorld()->SpawnActor<AActor>(TerrainPatchPool[PatchIndex], Location, FRotator::ZeroRotator);
+        // TODO: Stitch the terrain patch to the existing terrain
+        _terrainLocation = Location;
+    }
+}
+
 // Called every frame
 void AFoliageManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-    if (_mainCharacter && _MPC_Instance)
+    if (_mainCharacter)
     {
-        _fogSqrDisplacement = FVector::DistSquared(_mainCharacter->GetActorLocation(), _previousPlayerFogPosition);
-        if (_fogSqrDisplacement > MaxFogRecenterDistanceSqr)
+        _playerPosition = _mainCharacter->GetActorLocation();
+        if (_MPC_Instance)
         {
-            _previousPlayerFogPosition = _mainCharacter->GetActorLocation();
-            _MPC_Instance->SetVectorParameterValue(FName("FogCenter"), _previousPlayerFogPosition);
+            _fogSqrDisplacement = FVector::DistSquared(_playerPosition, _previousPlayerFogPosition);
+            if (_fogSqrDisplacement > MaxFogRecenterDistanceSqr)
+            {
+                _previousPlayerFogPosition = _playerPosition;
+                _MPC_Instance->SetVectorParameterValue(FName("FogCenter"), _previousPlayerFogPosition);
+            }
+        }
+
+        if (FVector::DistSquared(_playerPosition, _terrainLocation) > SpawnDistanceThreshold)
+        {
+            FVector NewPatchLocation = _terrainLocation + FVector(1000, 0, 0); // Adjust location logic
+            SpawnPatchAtLocation(NewPatchLocation);
         }
     }
 }
