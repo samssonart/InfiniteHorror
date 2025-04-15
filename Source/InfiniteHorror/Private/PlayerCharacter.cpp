@@ -4,9 +4,15 @@
 #include "PlayerCharacter.h"
 #include "EnhancedInputComponent.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
+#include "DifficultyAbilitySystemComponent.h"
 #include "InputAction.h"
 
 UInputAction* IA_Torch;
+
+UAbilitySystemComponent* APlayerCharacter::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -15,11 +21,32 @@ APlayerCharacter::APlayerCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	SetupStimuli();
 
+	AbilitySystemComponent = CreateDefaultSubobject<UDifficultyAbilitySystemComponent>("AbilitySystemComponent");
+	if (AbilitySystemComponent)
+	{
+		AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
+		//SetDefaultAbilities();
+	}
+
 	// Find the Input Action asset
 	static ConstructorHelpers::FObjectFinder<UInputAction> TorchAction(TEXT("/Game/Input/IA_Torch"));
 	if (TorchAction.Succeeded())
 	{
 		IA_Torch = TorchAction.Object;
+	}
+}
+
+void APlayerCharacter::SetDefaultAbilities()
+{
+	if (AbilitySystemComponent)
+	{
+		for (auto AbilityClass : DefaultAbilities)
+		{
+			if (AbilityClass)
+			{
+				AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(AbilityClass, 1, INDEX_NONE, this));
+			}
+		}
 	}
 }
 
@@ -34,6 +61,11 @@ void APlayerCharacter::BeginPlay()
 	{
 		// Assuming you have only one instance or you want the first one found
 		WidgetController = Cast<UUIWidgetController>(FoundWidgets[0]);
+	}
+	
+	if (AbilitySystemComponent)
+	{
+		AbilitySystemComponent->InitAbilityActorInfo(this,this);
 	}
 }
 

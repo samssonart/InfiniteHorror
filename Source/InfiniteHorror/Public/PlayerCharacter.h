@@ -6,16 +6,24 @@
 #include "Perception/AISense_Sight.h"
 #include "Perception/AISense_Hearing.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
 #include "UIWidgetController.h"
+#include "Abilities/GameplayAbility.h"
 #include "PlayerCharacter.generated.h"
+
+class UDifficultyAbilitySystemComponent;
 
 /**
  * The player character class
  */
 UCLASS()
-class INFINITEHORROR_API APlayerCharacter : public ACharacter
+class INFINITEHORROR_API APlayerCharacter : public ACharacter, public IAbilitySystemInterface
 {
+public:
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+private:
 	GENERATED_BODY()
 
 public:
@@ -45,6 +53,11 @@ public:
 
 
 protected:
+
+	/*
+	 *@brief Sets the default abilities of the player
+	 */
+	void SetDefaultAbilities();
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	// Called to bind functionality to input
@@ -57,6 +70,12 @@ private:
 	void ToggleTorch();
 
 	TObjectPtr<UUIWidgetController> WidgetController = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Difficulty", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UDifficultyAbilitySystemComponent> AbilitySystemComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Difficulty", meta = (AllowPrivateAccess = "true"))
+	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default", meta = (AllowPrivateAccess = "true"))
 	bool bIsTorchOn = false;

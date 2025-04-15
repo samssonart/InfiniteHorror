@@ -4,10 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "UIWidgetController.h"
+#include "AbilitySystemInterface.h"
+#include "Abilities/GameplayAbility.h"
 #include "GameFramework/Character.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "Animation/AnimMontage.h"
 #include "NPC_Spirit.generated.h"
+
+class UDifficultyAbilitySystemComponent;
 
 class ANPCFactory;
 
@@ -15,8 +19,10 @@ class ANPCFactory;
  * Common class for all NPC (spirits) in the game
  */
 UCLASS()
-class INFINITEHORROR_API ANPC_Spirit : public ACharacter
+class INFINITEHORROR_API ANPC_Spirit : public ACharacter, public IAbilitySystemInterface
 {
+
+private:
 	GENERATED_BODY()
 
 public:
@@ -132,8 +138,14 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
 protected:
-	// Called when the game starts or when spawned
+	/*
+	 *@brief Sets the default abilities of the player
+	 */
+	void SetDefaultAbilities();
+	
 	virtual void BeginPlay() override;
 
 	virtual void Destroyed() override;
@@ -151,6 +163,12 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collision", meta = (AllowPrivateAccess = "true"))
 	FVector HandCollisionOffset;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Difficulty", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UDifficultyAbilitySystemComponent> AbilitySystemComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Difficulty", meta = (AllowPrivateAccess = "true"))
+	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
 
 	TObjectPtr<ACharacter> PlayerActor;
 	

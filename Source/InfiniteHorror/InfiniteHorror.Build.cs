@@ -9,7 +9,7 @@ public class InfiniteHorror : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", 
-			"Foliage", "AIModule", "NavigationSystem", "GameplayTasks", "Slate", "SlateCore", "UMG" });
+			"Foliage", "AIModule", "NavigationSystem", "GameplayTasks", "Slate", "SlateCore", "UMG", "GameplayAbilities", "GameplayTasks", "GameplayTags" });
 
 		//PrivateDependencyModuleNames.AddRange(new string[] { "Foliage" });
 

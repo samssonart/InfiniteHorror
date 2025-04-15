@@ -5,11 +5,11 @@
 #include "NPCFactory.h"
 #include "PlayerCharacter.h"
 #include "NPCDissolveLatentAction.h"
+#include "DifficultyAbilitySystemComponent.h"
 #include "GameFramework/Actor.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "Kismet/KismetMaterialLibrary.h"
 #include "Components/BoxComponent.h"
 #include "Materials/MaterialParameterCollection.h"
 #include "UIWidgetController.h"
@@ -33,6 +33,12 @@ ANPC_Spirit::ANPC_Spirit()
 		HandCollision->OnComponentBeginOverlap.AddDynamic(this, &ANPC_Spirit::OnAttackOverlapBegin);
 		HandCollision->OnComponentEndOverlap.AddDynamic(this, &ANPC_Spirit::OnAttackOverlapEnd);
 	}
+
+	AbilitySystemComponent = CreateDefaultSubobject<UDifficultyAbilitySystemComponent>("AbilitySystemComponent");
+	if (AbilitySystemComponent)
+	{
+		AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+	}
 }
 
 // Called when the game starts or when spawned
@@ -52,6 +58,12 @@ void ANPC_Spirit::BeginPlay()
 	if (MPC_Instance)
 	{
 		MPC_Instance->SetScalarParameterValue(FName("DissolveAmount"), 0.0f);
+	}
+
+	if (AbilitySystemComponent)
+	{
+		AbilitySystemComponent->InitAbilityActorInfo(this,this);
+		//SetDefaultAbilities();
 	}
 	
 	NPCFactoryRef = Cast<ANPCFactory>(UGameplayStatics::GetActorOfClass(GetWorld(), ANPCFactory::StaticClass()));
@@ -123,6 +135,25 @@ void ANPC_Spirit::Tick(float DeltaTime)
 		else
 		{
 			IsRotating = false;
+		}
+	}
+}
+
+UAbilitySystemComponent* ANPC_Spirit::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
+
+void ANPC_Spirit::SetDefaultAbilities()
+{
+	if (AbilitySystemComponent)
+	{
+		for (auto AbilityClass : DefaultAbilities)
+		{
+			if (AbilityClass)
+			{
+				AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(AbilityClass, 1, INDEX_NONE, this));
+			}
 		}
 	}
 }
