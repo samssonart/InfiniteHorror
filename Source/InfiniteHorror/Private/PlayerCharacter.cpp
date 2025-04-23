@@ -2,6 +2,7 @@
 
 
 #include "PlayerCharacter.h"
+#include "CharacterState.h"
 #include "EnhancedInputComponent.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "DifficultyAbilitySystemComponent.h"
@@ -14,19 +15,17 @@ UAbilitySystemComponent* APlayerCharacter::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
+UPlayerAttributeSet* APlayerCharacter::GetAttributeSet() const
+{
+	return PlayerAttributeSet;
+}
+
 // Sets default values
 APlayerCharacter::APlayerCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	SetupStimuli();
-
-	AbilitySystemComponent = CreateDefaultSubobject<UDifficultyAbilitySystemComponent>("AbilitySystemComponent");
-	if (AbilitySystemComponent)
-	{
-		AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
-		//SetDefaultAbilities();
-	}
 
 	// Find the Input Action asset
 	static ConstructorHelpers::FObjectFinder<UInputAction> TorchAction(TEXT("/Game/Input/IA_Torch"));
@@ -34,6 +33,15 @@ APlayerCharacter::APlayerCharacter()
 	{
 		IA_Torch = TorchAction.Object;
 	}
+}
+
+void APlayerCharacter::InitAbilitySystemComponent()
+{
+	ACharacterState* PlayerStateRef = GetPlayerState<ACharacterState>();
+	check(PlayerStateRef);
+	AbilitySystemComponent = CastChecked<UDifficultyAbilitySystemComponent>(PlayerStateRef->GetAbilitySystemComponent());
+	AbilitySystemComponent->InitAbilityActorInfo(PlayerStateRef, this);
+	PlayerAttributeSet = PlayerStateRef->GetAttributeSet();
 }
 
 void APlayerCharacter::SetDefaultAbilities()
@@ -46,6 +54,23 @@ void APlayerCharacter::SetDefaultAbilities()
 			{
 				AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(AbilityClass, 1, INDEX_NONE, this));
 			}
+		}
+	}
+}
+
+void APlayerCharacter::SetDifficultyAttributes() const
+{
+	if (AbilitySystemComponent && DifficultyEffect)
+	{
+		FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
+		EffectContext.AddSourceObject(this);
+
+		const FGameplayEffectSpecHandle SpecHandle =
+			AbilitySystemComponent->MakeOutgoingSpec(DifficultyEffect, 1.0f, EffectContext);
+
+		if (SpecHandle.IsValid())
+		{
+			AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
 		}
 	}
 }
@@ -87,6 +112,14 @@ void APlayerCharacter::Tick(float DeltaTime)
 			return;
 		}
 	}
+}
+
+void APlayerCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	InitAbilitySystemComponent();
+	SetDifficultyAttributes();
 }
 
 // Called to bind functionality to input
