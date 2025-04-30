@@ -2,6 +2,7 @@
 
 
 #include "GameModeManager.h"
+#include "GameSettings.h"
 
 void AGameModeManager::BeginPlay()
 {
@@ -13,5 +14,15 @@ void AGameModeManager::BeginPlay()
 		{
 			Widget->AddToViewport();
 		}
+	}
+
+	UGameSettings* GameSettings = Cast<UGameSettings>(UGameUserSettings::GetGameUserSettings());
+	if (GameSettings)
+	{
+		GameSettings->InitializeSettings();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("GameSettings not found!"));
 	}
 }
