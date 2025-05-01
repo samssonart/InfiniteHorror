@@ -16,6 +16,12 @@ class INFINITEHORROR_API UGameSettings : public UGameUserSettings
 	GENERATED_BODY()
 	
 public:
+
+	/*
+	 *@brief Constructor
+	 */
+	UGameSettings(const FObjectInitializer& ObjectInitializer);
+	
 	/*
 	* @brief Sets the game difficulty
 	* @param NewValue The new difficulty value, as an enum

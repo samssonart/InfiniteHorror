@@ -3,6 +3,11 @@
 
 #include "GameSettings.h"
 
+UGameSettings::UGameSettings(const FObjectInitializer& ObjectInitializer)
+{
+	SetToDefaults();
+}
+
 void UGameSettings::SetGameDifficulty(Difficulty NewValue)
 {
 	GameDifficulty = NewValue;
@@ -17,6 +22,16 @@ void UGameSettings::InitializeSettings()
 {
 	// Try to load from file
 	LoadSettings();
+
+	if (GameDifficulty == Difficulty::None)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("GameSettings difficulty not set!"));
+		// If not set, use default value
+		GameDifficulty = Difficulty::Medium;
+	}
+
+	// Save the settings to file
+	ApplySettings(false);
 }
 
 UGameUserSettings* UGameSettings::GetGameUserSettings()

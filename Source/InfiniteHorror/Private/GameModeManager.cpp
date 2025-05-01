@@ -16,7 +16,8 @@ void AGameModeManager::BeginPlay()
 		}
 	}
 
-	UGameSettings* GameSettings = Cast<UGameSettings>(UGameUserSettings::GetGameUserSettings());
+	UGameUserSettings* UserSettings = UGameUserSettings::GetGameUserSettings();
+	UGameSettings* GameSettings = dynamic_cast<UGameSettings*>(UserSettings);
 	if (GameSettings)
 	{
 		GameSettings->InitializeSettings();
