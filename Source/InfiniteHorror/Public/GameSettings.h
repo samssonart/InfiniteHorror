@@ -27,13 +27,13 @@ public:
 	* @param NewValue The new difficulty value, as an enum
 	*/
 	UFUNCTION(BlueprintCallable)
-	void SetGameDifficulty(Difficulty NewValue);
+	void SetGameDifficulty(EDifficulty NewValue);
 
 	/*
 	* @brief Gets the current game difficulty
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Settings")
-	Difficulty GetCurrentDifficulty() const;
+	EDifficulty GetCurrentDifficulty() const;
 
 	/*
 	* @brief Gets settings from file or default values
@@ -42,7 +42,7 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Difficulty")
-	Difficulty GameDifficulty;
+	EDifficulty GameDifficulty;
 
 	static UGameUserSettings* GetGameUserSettings();
 };

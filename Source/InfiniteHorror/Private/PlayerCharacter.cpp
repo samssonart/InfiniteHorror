@@ -6,6 +6,7 @@
 #include "EnhancedInputComponent.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "DifficultyAbilitySystemComponent.h"
+#include "GameModeManager.h"
 #include "InputAction.h"
 
 UInputAction* IA_Torch;
@@ -68,9 +69,17 @@ void APlayerCharacter::SetDifficultyAttributes() const
 		const FGameplayEffectSpecHandle SpecHandle =
 			AbilitySystemComponent->MakeOutgoingSpec(DifficultyEffect, 1.0f, EffectContext);
 
-		if (SpecHandle.IsValid())
+		const TObjectPtr<AGameModeManager> GameModeManager =
+			Cast<AGameModeManager>(UGameplayStatics::GetGameMode(GetWorld()));
+
+		if (SpecHandle.IsValid() && GameModeManager && GameModeManager->GameSettings)
 		{
-			AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+			int GameDifficultyNumeric = StaticCast<int>(GameModeManager->GameSettings->GetCurrentDifficulty());
+			float MentalHealthCurrent = MentalHealthMax.GetValueAtLevel(GameDifficultyNumeric);
+			FGameplayEffectSpec* Spec = SpecHandle.Data.Get();
+			const FGameplayTag CallerTag = FGameplayTag::RequestGameplayTag(FName("Data.MentalHealth.Level"));
+			Spec->SetSetByCallerMagnitude(CallerTag, MentalHealthCurrent);
+			AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*Spec);
 		}
 	}
 }

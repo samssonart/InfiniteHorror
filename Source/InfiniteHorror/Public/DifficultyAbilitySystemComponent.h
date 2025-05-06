@@ -8,7 +8,7 @@
 #include "DifficultyAbilitySystemComponent.generated.h"
 
 UENUM(BlueprintType)
-enum class Difficulty : uint8
+enum class EDifficulty : uint8
 {
 	None UMETA(DisplayName = "None"),
 	Easy UMETA(DisplayName = "Easy"),
