@@ -76,9 +76,15 @@ void APlayerCharacter::SetDifficultyAttributes() const
 		{
 			int GameDifficultyNumeric = StaticCast<int>(GameModeManager->GameSettings->GetCurrentDifficulty());
 			float MentalHealthCurrent = MentalHealthMax.GetValueAtLevel(GameDifficultyNumeric);
+			float EnduranceCurrent = Endurance.GetValueAtLevel(GameDifficultyNumeric);
+			float StaminaCurrent = MoveSpeed.GetValueAtLevel(GameDifficultyNumeric);
 			FGameplayEffectSpec* Spec = SpecHandle.Data.Get();
-			const FGameplayTag CallerTag = FGameplayTag::RequestGameplayTag(FName("Data.MentalHealth.Level"));
+			FGameplayTag CallerTag = FGameplayTag::RequestGameplayTag(FName("Data.MentalHealth.Level"));
 			Spec->SetSetByCallerMagnitude(CallerTag, MentalHealthCurrent);
+			CallerTag = FGameplayTag::RequestGameplayTag(FName("Data.Endurance.Level"));
+			Spec->SetSetByCallerMagnitude(CallerTag, EnduranceCurrent);
+			CallerTag = FGameplayTag::RequestGameplayTag(FName("Data.Stamina.Level"));
+			Spec->SetSetByCallerMagnitude(CallerTag, StaminaCurrent);
 			AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*Spec);
 		}
 	}
