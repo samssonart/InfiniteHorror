@@ -4,40 +4,50 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Engine/Light.h"
 #include "LightManager.generated.h"
 
+class UDirectionalLightComponent;
+class UActorComponent;
+
+/**
+ * @brief Manages the main directional light in the scene.
+ */
 UCLASS()
 class INFINITEHORROR_API ALightManager : public AActor
 {
-	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	ALightManager();
+    GENERATED_BODY()
 
-	/*
-	* @brief Reference to the scene's main light
-	*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Main Light Intensity")
-	TObjectPtr<ALight> MainLight;
-
-	/*
-	* @brief The light intensity for gameplay
-	*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Main Light Intensity")
-	float GameIntensity;
-
-	/*
-	* @brief The light intensity for the editor. Gameplay is usually a very low value that makes it hard to see in the editor
-	* @see GameIntensity
-	*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Main Light Intensity")
-	float EditorIntensity;
+public:
+    /**
+     * @brief Sets default values for this actor's properties.
+     */
+    ALightManager();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+    /**
+     * @brief Called when the game starts or when spawned.
+     */
+    virtual void BeginPlay() override;
 
+    /**
+     * @brief Called when the actor is being removed from the level.
+     * @param EndPlayReason The reason the actor is being removed.
+     */
+    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+    /** The main light actor in the scene. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Light")
+    TObjectPtr<AActor> MainLight;
+
+    /** Intensity to use during gameplay. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Light")
+    float GameIntensity = 10.0f;
+
+    /** Intensity to use in the editor. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Light")
+    float EditorIntensity = 1.0f;
+
+private:
+    /** Cached reference to the directional light component. */
+    TObjectPtr<UDirectionalLightComponent> DirectionalLightComponent = nullptr;
 };

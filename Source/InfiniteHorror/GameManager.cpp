@@ -1,25 +1,20 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
-
 #include "GameManager.h"
-#include <string>
-#include "Kismet/GameplayStatics.h"
 #include "Engine/Engine.h"
 
-UGameManager* UGameManager::_instance = nullptr;
+TObjectPtr<UGameManager> UGameManager::Instance = nullptr;
 
-UGameManager* UGameManager::GetInstance()
+TObjectPtr<UGameManager> UGameManager::GetInstance()
 {
-	if (!_instance)
-	{
-		_instance = NewObject<UGameManager>();
-		_instance->AddToRoot();
-	}
-	return _instance;
+    if (!Instance)
+    {
+        Instance = NewObject<UGameManager>();
+        Instance->AddToRoot();
+    }
+    return Instance;
 }
-
 
 void UGameManager::Init()
 {
 }
-

@@ -2,6 +2,8 @@
 
 
 #include "GameModeManager.h"
+#include "GameSettings.h"
+#include "UIWidgetController.h"
 
 AGameModeManager::AGameModeManager(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {

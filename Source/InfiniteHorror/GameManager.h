@@ -3,25 +3,29 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Subsystems/GameInstanceSubsystem.h"
-#include "ProceduralFoliageComponent.h"
 #include "GameManager.generated.h"
 
 /**
- * 
+ * @brief Singleton manager for game-wide systems and state.
  */
-UCLASS(Abstract, Blueprintable)
+UCLASS()
 class INFINITEHORROR_API UGameManager : public UGameInstance
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
+    /**
+     * @brief Retrieves the singleton instance of the GameManager.
+     * @return The singleton instance.
+     */
+    static TObjectPtr<UGameManager> GetInstance();
 
-	static UGameManager* GetInstance();
-	virtual void Init() override;
-	UProceduralFoliageComponent* ProceduralFoliageGenerator;
-	AActor* ProceduralFoliageVolume;
+    /**
+     * @brief Initializes the game manager.
+     */
+    void Init();
 
 private:
-	static UGameManager* _instance;
+    /** Singleton instance of the GameManager. */
+    static TObjectPtr<UGameManager> Instance;
 };
