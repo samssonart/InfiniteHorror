@@ -1,18 +1,18 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
-#include "NPC_Spirit.h"
-#include "NPCFactory.h"
-#include "PlayerCharacter.h"
-#include "NPCDissolveLatentAction.h"
-#include "DifficultyAbilitySystemComponent.h"
+#include "NPCs/NPC_Spirit.h"
+#include "NPCs/NPCFactory.h"
+#include "Player/PlayerCharacter.h"
+#include "NPCs/NPCDissolveLatentAction.h"
+#include "Player/DifficultyAbilitySystemComponent.h"
 #include "GameFramework/Actor.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/BoxComponent.h"
 #include "Materials/MaterialParameterCollection.h"
-#include "UIWidgetController.h"
+#include "GameLogic/UIWidgetController.h"
 #include "Materials/MaterialParameterCollectionInstance.h"
 
 TObjectPtr<UObject> WorldContextObj;

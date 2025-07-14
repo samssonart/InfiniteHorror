@@ -1,7 +1,7 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
-#include "BTTask_GetPlayerPosition.h"
+#include "NPCs/BTTask_GetPlayerPosition.h"
 #include "NavigationSystem.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"

@@ -11,7 +11,7 @@
 #include "ScalableFloat.h"
 #include "PlayerAttributeSet.h"
 #include "GameFramework/Character.h"
-#include "UIWidgetController.h"
+#include "GameLogic/UIWidgetController.h"
 #include "Abilities/GameplayAbility.h"
 #include "PlayerCharacter.generated.h"
 

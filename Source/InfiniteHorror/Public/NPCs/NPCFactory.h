@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "NPC_Spirit.h"
-#include "PlayerCharacter.h"
+#include "Player/PlayerCharacter.h"
 #include "GameFramework/Actor.h"
 #include "NPCFactory.generated.h"
 

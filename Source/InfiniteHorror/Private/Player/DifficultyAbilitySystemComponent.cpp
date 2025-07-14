@@ -1,7 +1,7 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
-#include "DifficultyAbilitySystemComponent.h"
+#include "Player/DifficultyAbilitySystemComponent.h"
 
 // Sets default values
 UDifficultyAbilitySystemComponent::UDifficultyAbilitySystemComponent()

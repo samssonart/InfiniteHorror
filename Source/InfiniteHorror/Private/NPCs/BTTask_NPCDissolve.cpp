@@ -1,8 +1,8 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
-#include "BTTask_NPCDissolve.h"
+#include "NPCs/BTTask_NPCDissolve.h"
 #include "AIController.h"
-#include "NPC_spirit.h"
+#include "NPCs/NPC_spirit.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 
 UBTTask_NPCDissolve::UBTTask_NPCDissolve()

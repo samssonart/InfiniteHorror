@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameUserSettings.h"
-#include "DifficultyAbilitySystemComponent.h"
+#include "Player/DifficultyAbilitySystemComponent.h"
 #include "GameSettings.generated.h"
 
 /**

@@ -1,4 +1,4 @@
-#include "NPCDissolveLatentAction.h"
+#include "NPCs/NPCDissolveLatentAction.h"
 
 void NPCDissolveLatentAction::Initialize()
 {

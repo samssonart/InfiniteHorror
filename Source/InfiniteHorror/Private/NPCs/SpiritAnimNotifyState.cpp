@@ -1,7 +1,7 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
-#include "SpiritAnimNotifyState.h"
+#include "NPCs/SpiritAnimNotifyState.h"
 
 void USpiritAnimNotifyState::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration)
 {

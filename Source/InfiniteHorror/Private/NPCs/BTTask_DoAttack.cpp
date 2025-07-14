@@ -1,7 +1,7 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
-#include "BTTask_DoAttack.h"
+#include "NPCs/BTTask_DoAttack.h"
 #include "AIController.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Engine/LatentActionManager.h"

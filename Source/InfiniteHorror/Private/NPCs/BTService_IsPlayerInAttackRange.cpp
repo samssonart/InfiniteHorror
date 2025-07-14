@@ -1,9 +1,9 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
-#include "BTService_IsPlayerInAttackRange.h"
-#include "NPC_Spirit.h"
-#include "NPC_Spirit_AIController.h"
+#include "NPCs/BTService_IsPlayerInAttackRange.h"
+#include "NPCs/NPC_Spirit.h"
+#include "NPCs/NPC_Spirit_AIController.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
 #include "Runtime/Engine/Classes/Engine/World.h"

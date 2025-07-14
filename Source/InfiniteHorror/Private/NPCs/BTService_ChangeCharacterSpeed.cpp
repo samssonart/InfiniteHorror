@@ -1,9 +1,9 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
-#include "BTService_ChangeCharacterSpeed.h"
+#include "NPCs/BTService_ChangeCharacterSpeed.h"
 #include "AIController.h"
-#include "NPC_Spirit.h"
+#include "NPCs/NPC_Spirit.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 

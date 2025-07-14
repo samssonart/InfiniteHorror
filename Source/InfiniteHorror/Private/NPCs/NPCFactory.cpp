@@ -1,6 +1,6 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
-#include "NPCFactory.h"
+#include "NPCs/NPCFactory.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
 #include "UObject/ConstructorHelpers.h"

@@ -1,8 +1,8 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
-#include "BTTask_GetRandomLocation.h"
-#include "NPC_Spirit_AIController.h"
+#include "NPCs/BTTask_GetRandomLocation.h"
+#include "NPCs/NPC_Spirit_AIController.h"
 
 UBTTask_GetRandomLocation::UBTTask_GetRandomLocation(FObjectInitializer const& ObjectInitializer)
 {

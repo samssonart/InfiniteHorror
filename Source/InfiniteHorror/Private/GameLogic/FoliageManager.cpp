@@ -1,7 +1,7 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
-#include "FoliageManager.h"
+#include "GameLogic/FoliageManager.h"
 #include "Kismet/GameplayStatics.h"
 #include "InstancedFoliage.h"
 #include "GameFramework/Character.h"

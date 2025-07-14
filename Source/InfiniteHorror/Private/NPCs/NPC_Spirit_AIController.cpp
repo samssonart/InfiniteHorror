@@ -1,8 +1,8 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
-#include "NPC_Spirit_AIController.h"
-#include "NPC_Spirit.h"
+#include "NPCs/NPC_Spirit_AIController.h"
+#include "NPCs/NPC_Spirit.h"
 #include "Engine/World.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Perception/AIPerceptionComponent.h"

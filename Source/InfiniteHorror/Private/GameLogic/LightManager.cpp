@@ -1,6 +1,6 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
-#include "LightManager.h"
+#include "GameLogic/LightManager.h"
 #include "Components/DirectionalLightComponent.h"
 
 ALightManager::ALightManager()

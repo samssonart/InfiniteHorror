@@ -1,7 +1,7 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
-#include "GameSettings.h"
+#include "GameLogic/GameSettings.h"
 
 UGameSettings::UGameSettings(const FObjectInitializer& ObjectInitializer)
 {

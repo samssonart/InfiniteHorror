@@ -1,9 +1,9 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
-#include "CharacterState.h"
-#include "DifficultyAbilitySystemComponent.h"
-#include "PlayerAttributeSet.h"
+#include "Player/CharacterState.h"
+#include "Player/DifficultyAbilitySystemComponent.h"
+#include "Player/PlayerAttributeSet.h"
 
 UAbilitySystemComponent* ACharacterState::GetAbilitySystemComponent() const
 {

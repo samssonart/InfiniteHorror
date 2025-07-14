@@ -1,13 +1,16 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
-#include "PlayerCharacter.h"
-#include "CharacterState.h"
+#include "Player/PlayerCharacter.h"
+#include "Player/CharacterState.h"
 #include "EnhancedInputComponent.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
-#include "DifficultyAbilitySystemComponent.h"
-#include "GameModeManager.h"
+#include "Player/DifficultyAbilitySystemComponent.h"
+#include "GameLogic/GameModeManager.h"
+#include "GameLogic/GameSettings.h"
+#include "Kismet/GameplayStatics.h"
 #include "InputAction.h"
+
 
 UInputAction* IA_Torch;
 

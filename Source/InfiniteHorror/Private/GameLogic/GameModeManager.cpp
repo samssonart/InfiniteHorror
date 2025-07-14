@@ -1,9 +1,9 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
-#include "GameModeManager.h"
-#include "GameSettings.h"
-#include "UIWidgetController.h"
+#include "GameLogic/GameModeManager.h"
+#include "GameLogic/GameSettings.h"
+#include "GameLogic/UIWidgetController.h"
 
 AGameModeManager::AGameModeManager(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {

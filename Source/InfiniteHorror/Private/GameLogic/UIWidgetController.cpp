@@ -1,12 +1,12 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
-#include "UIWidgetController.h"
+#include "GameLogic/UIWidgetController.h"
 #include "Components/Widget.h"
 #include "Blueprint/WidgetTree.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
-#include "PlayerCharacter.h"
+#include "Player/PlayerCharacter.h"
 #include "Engine/Engine.h"
 
 APlayerCharacter* PlayerCharacter;

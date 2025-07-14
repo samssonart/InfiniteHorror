@@ -1,7 +1,7 @@
 // Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
 
 
-#include "PlayerAttributeSet.h"
+#include "Player/PlayerAttributeSet.h"
 #include "GameplayEffectExtension.h"
 
 UPlayerAttributeSet::UPlayerAttributeSet()
