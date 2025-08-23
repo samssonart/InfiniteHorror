@@ -87,11 +87,11 @@ void ANPC_Spirit::OnAttackOverlapBegin(UPrimitiveComponent* const OverlappedComp
 {
 	if (OtherActor != this && bIsNPCInAttackMode)
 	{
-		if (APlayerCharacter* const PlayerCharacter = Cast<APlayerCharacter>(OtherActor))
+		if (APlayerCharacter* const PCharacter = Cast<APlayerCharacter>(OtherActor))
 		{
-			int newHealth = PlayerCharacter->GetCurrentMentalHealth() - AttackValue;
+			int newHealth = PCharacter->GetCurrentMentalHealth() - AttackValue;
 			newHealth = FMath::Max(newHealth, 0);
-			PlayerCharacter->SetMentalHealth(newHealth);
+			PCharacter->SetMentalHealth(newHealth);
 		}
 	}
 }
