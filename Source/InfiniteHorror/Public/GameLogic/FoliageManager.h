@@ -1,4 +1,4 @@
-// Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
+﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 #pragma once
 
@@ -74,3 +74,4 @@ private:
 	TObjectPtr<UMaterialParameterCollectionInstance> _MPC_Instance;
 	TObjectPtr<AActor> _currentTerrainPatch;
 };
+

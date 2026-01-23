@@ -1,4 +1,4 @@
-// Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
+﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 
 #include "NPCs/BTService_IsPlayerInAttackRange.h"
@@ -24,3 +24,4 @@ void UBTService_IsPlayerInAttackRange::OnBecomeRelevant(UBehaviorTreeComponent& 
 
 	OwnerComp.GetBlackboardComponent()->SetValueAsBool(GetSelectedBlackboardKey(), NPC->GetDistanceTo(player) <= AttackRange);
 }
+

@@ -1,4 +1,4 @@
-// Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
+﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 #pragma once
 
@@ -89,3 +89,4 @@ private:
 	ANPC_Spirit* SpawnNPCFromSubclassRef(UWorld* World, const int NPCIndex, const FVector& Location, const FRotator& Rotation);
 
 };
+

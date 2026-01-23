@@ -1,4 +1,4 @@
-// Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
+﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 #include "GameManager.h"
 #include "Engine/Engine.h"
@@ -18,3 +18,4 @@ TObjectPtr<UGameManager> UGameManager::GetInstance()
 void UGameManager::Init()
 {
 }
+

@@ -1,4 +1,4 @@
-// Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
+﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 
 #include "Player/PlayerAttributeSet.h"
@@ -22,3 +22,4 @@ void UPlayerAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCall
 
 	}
 }
+
