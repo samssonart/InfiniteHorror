@@ -1,4 +1,4 @@
-// Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
+﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 #pragma once
 
@@ -29,3 +29,4 @@ private:
     /** Singleton instance of the GameManager. */
     static TObjectPtr<UGameManager> Instance;
 };
+

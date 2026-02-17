@@ -1,4 +1,4 @@
-// Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
+﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 #include "NPCs/NPCFactory.h"
 #include "Kismet/GameplayStatics.h"
@@ -103,4 +103,5 @@ ANPC_Spirit* ANPCFactory::SpawnNPCFromSubclassRef(UWorld* World, const int NPCIn
 
 	return nullptr;
 }
+
 

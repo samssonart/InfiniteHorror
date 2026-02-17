@@ -1,4 +1,4 @@
-// Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
+﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 #pragma once
 
@@ -38,3 +38,4 @@ public:
 	FGameplayAttributeData Endurance;
 	ATTRIBUTE_ACCESSORS(UPlayerAttributeSet, Endurance);
 };
+

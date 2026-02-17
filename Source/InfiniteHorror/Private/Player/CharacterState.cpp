@@ -1,4 +1,4 @@
-// Copyright (c) 2024 - 2025 Samssonart. All rights reserved.
+﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 
 #include "Player/CharacterState.h"
@@ -35,5 +35,6 @@ void ACharacterState::BeginPlay()
 	Super::BeginPlay();
 	
 }
+
 
 
