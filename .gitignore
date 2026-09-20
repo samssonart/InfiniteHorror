@@ -1,5 +1,13 @@
 # Visual Studio 2015 user specific files
 .vs/
+.slnx
+
+* Rider files
+.idea/
+
+* Diversion
+.diversion
+.dvignore
 
 # Compiled Object files
 *.slo
