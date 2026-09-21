@@ -1,24 +1,25 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 
 #include "NPCs/SpiritAnimNotifyState.h"
+#include "NPCs/NPCSpirit.h"
 
-void USpiritAnimNotifyState::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration)
+void USpiritAnimNotifyState::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration, const FAnimNotifyEventReference& EventReference)
 {
     if (MeshComp && MeshComp->GetOwner())
     {
-        if (ANPC_Spirit* const Spirit = Cast<ANPC_Spirit>(MeshComp->GetOwner()))
+        if (ANPCSpirit* const Spirit = Cast<ANPCSpirit>(MeshComp->GetOwner()))
         {
             Spirit->AttackStart();
         }
     }
 }
 
-void USpiritAnimNotifyState::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
+void USpiritAnimNotifyState::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {
     if (MeshComp && MeshComp->GetOwner())
     {
-        if (ANPC_Spirit* const Spirit = Cast<ANPC_Spirit>(MeshComp->GetOwner()))
+        if (ANPCSpirit* const Spirit = Cast<ANPCSpirit>(MeshComp->GetOwner()))
         {
             Spirit->AttackEnd();
         }

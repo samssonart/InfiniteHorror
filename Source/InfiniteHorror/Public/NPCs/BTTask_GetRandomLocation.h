@@ -1,11 +1,10 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "NavigationSystem.h"
 #include "BTTask_GetRandomLocation.generated.h"
 
 /**
@@ -22,21 +21,10 @@ public:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 	/*
-	* @brief Reference to the scene's navigation system
+	* @brief The radius within which to search for a random location, in world units
 	*/
-	TObjectPtr<UNavigationSystemV1> NavSystem;
-
-	/*
-	* @brief Whether the navigation system has been set
-	* @see NavSystem
-	*/
-	bool NavigationInvokerSet = false;
-
-	/*
-	* @brief The radius within which to search for a random location
-	*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta=(AllowPrivateAccess="true"))
-	float SearchRadius = 15.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta=(AllowPrivateAccess="true", ClampMin="1.0"))
+	float SearchRadius = 1500.0f;
 	
 };
 

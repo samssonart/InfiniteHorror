@@ -1,18 +1,24 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 
 #include "Player/PlayerCharacter.h"
-#include "Player/CharacterState.h"
+#include "Player/PlayerCharacterState.h"
+#include "Player/PlayerAttributeSet.h"
+#include "Player/DifficultyAbilitySystemComponent.h"
 #include "EnhancedInputComponent.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
-#include "Player/DifficultyAbilitySystemComponent.h"
 #include "GameLogic/GameModeManager.h"
 #include "GameLogic/GameSettings.h"
+#include "GameLogic/HUDWidget.h"
+#include "InfiniteHorrorLog.h"
 #include "Kismet/GameplayStatics.h"
 #include "InputAction.h"
+#include "GameplayEffect.h"
+#include "Abilities/GameplayAbility.h"
+#include "Perception/AISense_Sight.h"
+#include "Perception/AISense_Hearing.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
 
-
-UInputAction* IA_Torch;
 
 UAbilitySystemComponent* APlayerCharacter::GetAbilitySystemComponent() const
 {
@@ -31,19 +37,30 @@ APlayerCharacter::APlayerCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	SetupStimuli();
 
-	// Find the Input Action asset
-	static ConstructorHelpers::FObjectFinder<UInputAction> TorchAction(TEXT("/Game/Input/IA_Torch"));
-	if (TorchAction.Succeeded())
+	// Find the Input Action asset as a default; can be overridden per Blueprint.
+	static ConstructorHelpers::FObjectFinder<UInputAction> TorchActionFinder(TEXT("/Game/Input/IA_Torch"));
+	if (TorchActionFinder.Succeeded())
 	{
-		IA_Torch = TorchAction.Object;
+		TorchAction = TorchActionFinder.Object;
 	}
 }
 
 void APlayerCharacter::InitAbilitySystemComponent()
 {
-	ACharacterState* PlayerStateRef = GetPlayerState<ACharacterState>();
-	check(PlayerStateRef);
-	AbilitySystemComponent = CastChecked<UDifficultyAbilitySystemComponent>(PlayerStateRef->GetAbilitySystemComponent());
+	APlayerCharacterState* PlayerStateRef = GetPlayerState<APlayerCharacterState>();
+	if (!PlayerStateRef)
+	{
+		UE_LOG(LogInfiniteHorror, Error, TEXT("%s: PlayerState is not APlayerCharacterState; ability system disabled. Check PlayerStateClass in the game mode."), *GetName());
+		return;
+	}
+
+	AbilitySystemComponent = Cast<UDifficultyAbilitySystemComponent>(PlayerStateRef->GetAbilitySystemComponent());
+	if (!AbilitySystemComponent)
+	{
+		UE_LOG(LogInfiniteHorror, Error, TEXT("%s: PlayerState has no UDifficultyAbilitySystemComponent; ability system disabled."), *GetName());
+		return;
+	}
+
 	AbilitySystemComponent->InitAbilityActorInfo(PlayerStateRef, this);
 	PlayerAttributeSet = PlayerStateRef->GetAttributeSet();
 }
@@ -97,18 +114,19 @@ void APlayerCharacter::SetDifficultyAttributes() const
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	// The widget may not exist yet; FindWidgetController is retried lazily in Tick.
+	FindWidgetController();
+}
+
+void APlayerCharacter::FindWidgetController()
+{
 	TArray<UUserWidget*> FoundWidgets;
-	UWidgetBlueprintLibrary::GetAllWidgetsOfClass(GetWorld(), FoundWidgets, UUIWidgetController::StaticClass(), false);
+	UWidgetBlueprintLibrary::GetAllWidgetsOfClass(GetWorld(), FoundWidgets, UHUDWidget::StaticClass(), false);
 
 	if (FoundWidgets.Num() > 0)
 	{
 		// Assuming you have only one instance or you want the first one found
-		WidgetController = Cast<UUIWidgetController>(FoundWidgets[0]);
-	}
-	
-	if (AbilitySystemComponent)
-	{
-		AbilitySystemComponent->InitAbilityActorInfo(this,this);
+		WidgetController = Cast<UHUDWidget>(FoundWidgets[0]);
 	}
 }
 
@@ -118,9 +136,13 @@ void APlayerCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (bIsTorchOn)
 	{
+		if (!WidgetController)
+		{
+			FindWidgetController();
+		}
 		if (WidgetController)
 		{
-			WidgetController->ResetVisibility(EWidgetType::Torch);
+			WidgetController->ResetVisibility(EWidgetType::Battery);
 		}
 		BatteryLevel -= DeltaTime * BatteryDepletionRate;
 		if (BatteryLevel <= 0.0f)
@@ -146,7 +168,14 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		EnhancedInputComponent->BindAction(IA_Torch, ETriggerEvent::Completed, this, &APlayerCharacter::ToggleTorch);
+		if (TorchAction)
+		{
+			EnhancedInputComponent->BindAction(TorchAction, ETriggerEvent::Completed, this, &APlayerCharacter::ToggleTorch);
+		}
+		else
+		{
+			UE_LOG(LogInfiniteHorror, Warning, TEXT("%s: TorchAction is not set; torch input will not be bound."), *GetName());
+		}
 	}
 }
 

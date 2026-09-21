@@ -1,9 +1,9 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 
 #include "NPCs/BTService_ChangeCharacterSpeed.h"
 #include "AIController.h"
-#include "NPCs/NPC_Spirit.h"
+#include "NPCs/NPCSpirit.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 
@@ -18,9 +18,9 @@ void UBTService_ChangeCharacterSpeed::OnBecomeRelevant(UBehaviorTreeComponent& O
 	Super::OnBecomeRelevant(OwnerComp, NodeMemory);
 	if (auto const AICont = OwnerComp.GetAIOwner())
 	{
-		if (auto* const NPC = Cast<ANPC_Spirit>(AICont->GetPawn()))
+		if (auto* const NPC = Cast<ANPCSpirit>(AICont->GetPawn()))
 		{
-			NPC->GetCharacterMovement()->MaxWalkSpeed = speed;
+			NPC->GetCharacterMovement()->MaxWalkSpeed = Speed;
 		}
 	}
 }

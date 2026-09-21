@@ -1,9 +1,8 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 #include "NPCs/BTTask_NPCDissolve.h"
 #include "AIController.h"
-#include "NPCs/NPC_spirit.h"
-#include "Runtime/Engine/Classes/Engine/World.h"
+#include "NPCs/NPCSpirit.h"
 
 UBTTask_NPCDissolve::UBTTask_NPCDissolve()
 {
@@ -19,19 +18,19 @@ EBTNodeResult::Type UBTTask_NPCDissolve::ExecuteTask(UBehaviorTreeComponent& Own
 		return EBTNodeResult::Failed;
 	}
 
-	bool npcJustAttacked = BBComp->GetValueAsBool(GetSelectedBlackboardKey());
-	if (npcJustAttacked)
+	const bool bNPCJustAttacked = BBComp->GetValueAsBool(GetSelectedBlackboardKey());
+	if (bNPCJustAttacked)
 	{
-		TObjectPtr<ANPC_Spirit> const npc = Cast<ANPC_Spirit>(OwnerComp.GetAIOwner()->GetPawn());
-		if (npc)
+		AAIController* const AICont = OwnerComp.GetAIOwner();
+		ANPCSpirit* const NPC = AICont ? Cast<ANPCSpirit>(AICont->GetPawn()) : nullptr;
+		if (NPC)
 		{
-			// FString InfoMessage = FString::Printf(TEXT("My work here is done... *dissolves*"));
-			// GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, InfoMessage);
-			npc->StartDissolve();
+			NPC->StartDissolve();
 		}
 		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 		return EBTNodeResult::Succeeded;
 	}
-	
-	return EBTNodeResult::InProgress;
+
+	// No tick notification is enabled, so returning InProgress would hang the tree forever.
+	return EBTNodeResult::Failed;
 }

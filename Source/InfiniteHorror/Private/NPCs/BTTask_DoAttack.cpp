@@ -1,12 +1,10 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 
 #include "NPCs/BTTask_DoAttack.h"
+#include "NPCs/NPCSpirit.h"
 #include "AIController.h"
-#include "Runtime/Engine/Classes/Engine/World.h"
-#include "Engine/LatentActionManager.h"
-#include "Components/SkeletalMeshComponent.h"
-#include "Animation/AnimMontage.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 UBTTask_DoAttack::UBTTask_DoAttack()
 {
@@ -17,30 +15,33 @@ UBTTask_DoAttack::UBTTask_DoAttack()
 
 EBTNodeResult::Type UBTTask_DoAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	BBComp = OwnerComp.GetBlackboardComponent();
-
-	if (!BBComp)
+	UBlackboardComponent* const BBComp = OwnerComp.GetBlackboardComponent();
+	if (!BBComp || !BBComp->GetValueAsBool(GetSelectedBlackboardKey()))
 	{
 		return EBTNodeResult::Failed;
 	}
-	
-	if (!BBComp->GetValueAsBool(GetSelectedBlackboardKey()))
+
+	AAIController* const AICont = OwnerComp.GetAIOwner();
+	ANPCSpirit* const NPC = AICont ? Cast<ANPCSpirit>(AICont->GetPawn()) : nullptr;
+	if (!NPC)
 	{
 		return EBTNodeResult::Failed;
 	}
-	
-	npc = Cast<ANPC_Spirit>(OwnerComp.GetAIOwner()->GetPawn());
-	if (npc)
-	{
-		npc->Attack();
-	}
 
+	NPC->Attack();
 	return EBTNodeResult::InProgress;
 }
 
 void UBTTask_DoAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
-	if (npc && BBComp && npc->bHasNPCAttacked)
+	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
+
+	// Re-fetch per-execution state from OwnerComp: node instances are shared across pawns.
+	UBlackboardComponent* const BBComp = OwnerComp.GetBlackboardComponent();
+	AAIController* const AICont = OwnerComp.GetAIOwner();
+	ANPCSpirit* const NPC = AICont ? Cast<ANPCSpirit>(AICont->GetPawn()) : nullptr;
+
+	if (NPC && BBComp && NPC->bHasNPCAttacked)
 	{
 		BBComp->SetValueAsBool(AttackCompletedKey, true);
 		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);

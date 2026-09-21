@@ -1,10 +1,9 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
-#include "GameFramework/Actor.h"
 #include "DifficultyAbilitySystemComponent.generated.h"
 
 UENUM(BlueprintType)
@@ -21,15 +20,8 @@ class INFINITEHORROR_API UDifficultyAbilitySystemComponent : public UAbilitySyst
 {
 	GENERATED_BODY()
 	
-public:	
-	// Sets default values for this actor's properties
+public:
+	// Sets default values for this component's properties
 	UDifficultyAbilitySystemComponent();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-private:
-	
 };
 

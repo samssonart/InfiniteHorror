@@ -1,33 +1,33 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 #pragma once
 
 #include "CoreMinimal.h"
-#include "NPC_Spirit.h"
 #include "LatentActions.h"
 
+class ANPCSpirit;
+
 /**
- * @brief A basic latent action that will be executed for a specified amount of time.
+ * @brief A latent action that will gradually make an actor less visible for a specified amount of time.
  */
 class INFINITEHORROR_API NPCDissolveLatentAction : public FPendingLatentAction
 {
 private:
 
-	TObjectPtr<ANPC_Spirit> _npcSpirit;
+	TObjectPtr<ANPCSpirit> Spirit;
 
 protected:
 
-	int _id;
-	float _totalTime;
-	float _elapsedTime;
-	float& _deltaTime;
-	float _transitionRatio = 0.0f;
-	TObjectPtr<AActor> _NPCActor;
+	int32 ActionID;
+	float TotalTime;
+	float ElapsedTime;
+	float TransitionRatio = 0.0f;
+	TObjectPtr<AActor> NPCActor;
 
 public:
 
-	NPCDissolveLatentAction(int id, float totalTime, float& deltaTime, AActor* ActorToDissolve)
-	: _id(id), _totalTime(totalTime), _deltaTime(deltaTime), _NPCActor(ActorToDissolve), _elapsedTime(0.0f)
+	NPCDissolveLatentAction(int32 InActionID, float InTotalTime, AActor* ActorToDissolve)
+	: ActionID(InActionID), TotalTime(InTotalTime), ElapsedTime(0.0f), NPCActor(ActorToDissolve)
 	{
 		Initialize();
 	};

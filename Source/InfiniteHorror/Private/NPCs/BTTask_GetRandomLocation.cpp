@@ -1,41 +1,32 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 
 #include "NPCs/BTTask_GetRandomLocation.h"
-#include "NPCs/NPC_Spirit_AIController.h"
+#include "NPCs/NPCSpiritAIController.h"
+#include "NavigationSystem.h"
 
 UBTTask_GetRandomLocation::UBTTask_GetRandomLocation(FObjectInitializer const& ObjectInitializer)
 {
 	NodeName = "Get a Random Location within a Nav Mesh";
-
-	NavSystem = UNavigationSystemV1::GetCurrent(GetWorld());
 }
 
 EBTNodeResult::Type UBTTask_GetRandomLocation::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	if (ANPC_Spirit_AIController* const npc = Cast<ANPC_Spirit_AIController>(OwnerComp.GetAIOwner()))
+	ANPCSpiritAIController* const AICon = Cast<ANPCSpiritAIController>(OwnerComp.GetAIOwner());
+	APawn* const Pawn = AICon ? AICon->GetPawn() : nullptr;
+	UNavigationSystemV1* const NavSystem = UNavigationSystemV1::GetCurrent(OwnerComp.GetWorld());
+	UBlackboardComponent* const BBComp = OwnerComp.GetBlackboardComponent();
+	if (!Pawn || !NavSystem || !BBComp)
 	{
-		FVector const Origin = npc->GetPawn()->GetActorLocation();
-
-		if (NavSystem)
-		{
-			if (!NavigationInvokerSet)
-			{
-				NavSystem->RegisterNavigationInvoker(npc->GetPawn()->GetOwner(), SearchRadius, SearchRadius);
-				NavigationInvokerSet = true;
-			}
-
-			FNavLocation Location;
-			if (NavSystem->GetRandomPointInNavigableRadius(Origin, SearchRadius, Location))
-			{
-				UBlackboardComponent* BBComp =  OwnerComp.GetBlackboardComponent();
-				BBComp->SetValueAsVector(GetSelectedBlackboardKey(), Location.Location);
-			}
-
-			FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
-			return EBTNodeResult::Succeeded;
-		}
+		return EBTNodeResult::Failed;
 	}
 
-	return EBTNodeResult::Failed;
+	FNavLocation Location;
+	if (!NavSystem->GetRandomReachablePointInRadius(Pawn->GetActorLocation(), SearchRadius, Location))
+	{
+		return EBTNodeResult::Failed;
+	}
+
+	BBComp->SetValueAsVector(GetSelectedBlackboardKey(), Location.Location);
+	return EBTNodeResult::Succeeded;
 }

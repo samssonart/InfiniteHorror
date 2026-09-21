@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 #pragma once
 
@@ -23,7 +23,7 @@ public:
 private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	float speed = 600.0f;
+	float Speed = 600.0f;
 	
 };
 

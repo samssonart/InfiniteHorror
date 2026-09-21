@@ -1,14 +1,13 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 
 #include "NPCs/BTTask_GetPlayerPosition.h"
-#include "NavigationSystem.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
-#include "GameFramework/Actor.h"
-#include "Camera/CameraComponent.h"
+#include "GameFramework/PlayerController.h"
+#include "Camera/PlayerCameraManager.h"
 
-UBTTask_GetPlayerPosition::UBTTask_GetPlayerPosition(FObjectInitializer const& ObjecctInitializer)
+UBTTask_GetPlayerPosition::UBTTask_GetPlayerPosition(FObjectInitializer const& ObjectInitializer)
 {
 	NodeName = "Finds Player actor and get its position";
 }
@@ -16,18 +15,17 @@ UBTTask_GetPlayerPosition::UBTTask_GetPlayerPosition(FObjectInitializer const& O
 EBTNodeResult::Type UBTTask_GetPlayerPosition::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	UWorld* GameWorld = GetWorld();
-	APlayerController* const playerCont = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-
+	APlayerController* const PlayerCont = UGameplayStatics::GetPlayerController(GameWorld, 0);
 
 	if (ACharacter* const PlayerActor = UGameplayStatics::GetPlayerCharacter(GameWorld, 0))
 	{
 		FVector PlayerLocation = PlayerActor->GetActorLocation();
 
-		if (playerCont)
+		if (PlayerCont)
 		{
-			if (APlayerCameraManager* camMan = playerCont->PlayerCameraManager)
+			if (APlayerCameraManager* CameraManager = PlayerCont->PlayerCameraManager)
 			{
-				PlayerLocation += camMan->GetActorForwardVector() * PlayerOffset;
+				PlayerLocation += CameraManager->GetActorForwardVector() * PlayerOffset;
 			}
 		}
 		else
@@ -35,7 +33,11 @@ EBTNodeResult::Type UBTTask_GetPlayerPosition::ExecuteTask(UBehaviorTreeComponen
 			PlayerLocation += PlayerActor->GetActorForwardVector() * PlayerOffset;
 		}
 
-		UBlackboardComponent* BBComp = OwnerComp.GetBlackboardComponent();
+		UBlackboardComponent* const BBComp = OwnerComp.GetBlackboardComponent();
+		if (!BBComp)
+		{
+			return EBTNodeResult::Failed;
+		}
 		BBComp->SetValueAsVector(GetSelectedBlackboardKey(), PlayerLocation);
 
 		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);

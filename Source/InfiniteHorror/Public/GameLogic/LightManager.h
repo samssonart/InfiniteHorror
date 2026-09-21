@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 #pragma once
 
@@ -6,8 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "LightManager.generated.h"
 
-class UDirectionalLightComponent;
-class UActorComponent;
+class ADirectionalLight;
 
 /**
  * @brief Manages the main directional light in the scene.
@@ -29,25 +28,11 @@ protected:
      */
     virtual void BeginPlay() override;
 
-    /**
-     * @brief Called when the actor is being removed from the level.
-     * @param EndPlayReason The reason the actor is being removed.
-     */
-    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-
-    /** The main light actor in the scene. */
+    /** The main directional light in the scene. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Light")
-    TObjectPtr<AActor> MainLight;
+    TObjectPtr<ADirectionalLight> MainLight;
 
     /** Intensity to use during gameplay. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Light")
     float GameIntensity = 10.0f;
-
-    /** Intensity to use in the editor. */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Light")
-    float EditorIntensity = 1.0f;
-
-private:
-    /** Cached reference to the directional light component. */
-    TObjectPtr<UDirectionalLightComponent> DirectionalLightComponent = nullptr;
 };

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 using UnrealBuildTool;
 
@@ -8,13 +8,8 @@ public class InfiniteHorror : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", 
-			"Foliage", "AIModule", "NavigationSystem", "GameplayTasks", "Slate", "SlateCore", "UMG", "GameplayAbilities", "GameplayTasks", "GameplayTags" });
-
-		//PrivateDependencyModuleNames.AddRange(new string[] { "Foliage" });
-
-		// Uncomment if you are using Slate UI
-		 PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput",
+			"Foliage", "AIModule", "NavigationSystem", "GameplayTasks", "Slate", "SlateCore", "UMG", "GameplayAbilities", "GameplayTags" });
 		
 		// Uncomment if you are using online features
 		// PrivateDependencyModuleNames.Add("OnlineSubsystem");

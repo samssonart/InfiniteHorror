@@ -1,12 +1,14 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 #pragma once
 
 #include "CoreMinimal.h"
-#include "NPC_Spirit.h"
-#include "Player/PlayerCharacter.h"
 #include "GameFramework/Actor.h"
 #include "NPCFactory.generated.h"
+
+class APatchStreamingManager;
+class ANPCSpirit;
+class APlayerCharacter;
 
 UCLASS()
 class INFINITEHORROR_API ANPCFactory : public AActor
@@ -30,21 +32,27 @@ protected:
 	// Called when the game starts or when spawned.
 	virtual void BeginPlay() override;
 
+	/*
+	* @brief Spawns the first NPC once the initial terrain patches have finished loading.
+	*/
+	UFUNCTION()
+	void OnInitialPatchesLoaded();
+
 private:
 
 	/*
-	* @brief The paths of the NPCs that can be spawned.
+	* @brief Whether the initial terrain patches have finished loading.
+	*/
+	bool bTerrainReady = false;
+
+	/*
+	* @brief The NPC classes that can be spawned.
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPCs", meta = (AllowPrivateAccess = "true"))
-	TArray<TSubclassOf<ANPC_Spirit>> NPCRefs;
+	TArray<TSubclassOf<ANPCSpirit>> NPCRefs;
 
 	/*
-	* @brief The pool of NPCs that can be spawned.
-	*/
-	TArray<TObjectPtr<ANPC_Spirit>> NPCPool;
-
-	/*
-	* @brief The radius of the NPC's sight
+	* @brief Vertical offset above the terrain height used when spawning an NPC.
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPCs", meta = (AllowPrivateAccess = "true"))
 	float NPCHeightOffset = 90.0f;
@@ -62,14 +70,27 @@ private:
 	float NPCReSpawnDelay = 5.0f;
 
 	/*
-	* @brief Reference to the player character.
+	* @brief Half the vertical length of the line trace used to find the terrain height when spawning.
 	*/
-	TObjectPtr<APlayerCharacter> PlayerActor;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPCs", meta = (AllowPrivateAccess = "true", ClampMin = "1.0"))
+	float SpawnTraceHalfHeight = 4000.0f;
+
+	/*
+	* @brief Countdown until the next NPC spawn; negative means spawn as soon as possible.
+	*/
+	float NPCRespawnTimer = -1.0f;
 
 	/*
 	* @brief Reference to the player character.
 	*/
-	TObjectPtr<ANPC_Spirit> NPCInPlay;
+	UPROPERTY(Transient)
+	TObjectPtr<APlayerCharacter> PlayerActor;
+
+	/*
+	* @brief Reference to the NPC currently in play.
+	*/
+	UPROPERTY(Transient)
+	TObjectPtr<ANPCSpirit> NPCInPlay;
 
 	/*
 	* @brief Whether an NPC is currently in play.
@@ -77,16 +98,16 @@ private:
 	bool bIsNPCInPlay = false;
 
 	/*
-	* @brief Spawns an NPC from the NPC pool in a random location within the NPCSpawnRadius.
-	* @see NPCSPawnRadius
+	* @brief Spawns an NPC in a random location within the NPCSpawnRadius.
+	* @see NPCSpawnRadius
 	*/
-	void SpawnNPC(int NPCIndex);
+	void SpawnNPC(int32 NPCIndex);
 
 	/*
-	* @biefs Spawns an NPC blueprint from a its game path.
+	* @brief Spawns an NPC from its class reference.
 	* @return The spawned NPC.
 	*/
-	ANPC_Spirit* SpawnNPCFromSubclassRef(UWorld* World, const int NPCIndex, const FVector& Location, const FRotator& Rotation);
+	ANPCSpirit* SpawnNPCFromSubclassRef(UWorld* World, const int32 NPCIndex, const FVector& Location, const FRotator& Rotation);
 
 };
 

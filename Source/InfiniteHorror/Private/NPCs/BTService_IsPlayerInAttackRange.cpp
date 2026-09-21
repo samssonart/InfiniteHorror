@@ -1,12 +1,11 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 
 #include "NPCs/BTService_IsPlayerInAttackRange.h"
-#include "NPCs/NPC_Spirit.h"
-#include "NPCs/NPC_Spirit_AIController.h"
-#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "NPCs/NPCSpirit.h"
+#include "AIController.h"
+#include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
-#include "Runtime/Engine/Classes/Engine/World.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 UBTService_IsPlayerInAttackRange::UBTService_IsPlayerInAttackRange()
@@ -18,10 +17,18 @@ UBTService_IsPlayerInAttackRange::UBTService_IsPlayerInAttackRange()
 
 void UBTService_IsPlayerInAttackRange::OnBecomeRelevant(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	ANPC_Spirit_AIController* const AICont = Cast<ANPC_Spirit_AIController>(OwnerComp.GetAIOwner());
-	ANPC_Spirit* const NPC = Cast<ANPC_Spirit>(AICont->GetPawn());
-	ACharacter* const player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	Super::OnBecomeRelevant(OwnerComp, NodeMemory);
 
-	OwnerComp.GetBlackboardComponent()->SetValueAsBool(GetSelectedBlackboardKey(), NPC->GetDistanceTo(player) <= AttackRange);
+	AAIController* const AICont = OwnerComp.GetAIOwner();
+	ANPCSpirit* const NPC = AICont ? Cast<ANPCSpirit>(AICont->GetPawn()) : nullptr;
+	ACharacter* const Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	UBlackboardComponent* const BBComp = OwnerComp.GetBlackboardComponent();
+
+	if (!NPC || !Player || !BBComp)
+	{
+		return;
+	}
+
+	BBComp->SetValueAsBool(GetSelectedBlackboardKey(), NPC->GetDistanceTo(Player) <= AttackRange);
 }
 

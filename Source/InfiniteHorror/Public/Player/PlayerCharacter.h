@@ -1,21 +1,20 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Perception/AISense_Sight.h"
-#include "Perception/AISense_Hearing.h"
-#include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "AbilitySystemInterface.h"
-#include "GameplayEffect.h"
 #include "ScalableFloat.h"
-#include "PlayerAttributeSet.h"
 #include "GameFramework/Character.h"
-#include "GameLogic/UIWidgetController.h"
-#include "Abilities/GameplayAbility.h"
 #include "PlayerCharacter.generated.h"
 
 class UDifficultyAbilitySystemComponent;
+class UPlayerAttributeSet;
+class UInputAction;
+class UGameplayAbility;
+class UGameplayEffect;
+class UAIPerceptionStimuliSourceComponent;
+class UHUDWidget;
 
 /**
  *@brief The player character class
@@ -121,12 +120,18 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:	
-	class UAIPerceptionStimuliSourceComponent* StimulusSource;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Perception", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UAIPerceptionStimuliSourceComponent> StimulusSource;
 
 	void SetupStimuli();
 	void ToggleTorch();
+	void FindWidgetController();
 
-	TObjectPtr<UUIWidgetController> WidgetController = nullptr;
+	UPROPERTY(Transient)
+	TObjectPtr<UHUDWidget> WidgetController = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> TorchAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Difficulty", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UDifficultyAbilitySystemComponent> AbilitySystemComponent;

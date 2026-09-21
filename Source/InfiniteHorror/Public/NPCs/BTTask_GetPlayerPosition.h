@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 #pragma once
 
@@ -16,7 +16,7 @@ class INFINITEHORROR_API UBTTask_GetPlayerPosition : public UBTTask_BlackboardBa
 	GENERATED_BODY()
 
 public:
-	explicit UBTTask_GetPlayerPosition(FObjectInitializer const& ObjecctInitializer);
+	explicit UBTTask_GetPlayerPosition(FObjectInitializer const& ObjectInitializer);
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 	
 private:

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
+// Copyright (c) 2024 - 2026 Samssonart. All rights reserved.
 
 #pragma once
 
@@ -41,9 +41,7 @@ public:
 	void InitializeSettings();
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Difficulty")
+	UPROPERTY(config, EditAnywhere, BlueprintReadWrite, Category = "Difficulty")
 	EDifficulty GameDifficulty;
-
-	static UGameUserSettings* GetGameUserSettings();
 };
 
