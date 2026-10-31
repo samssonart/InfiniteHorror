@@ -14,8 +14,8 @@
 	{
 		"MajorVersion": 5,
 		"MinorVersion": 8,
-		"PatchVersion": 2,
-		"Changelist": 56702186,
+		"PatchVersion": 4,
+		"Changelist": 58902052,
 		"CompatibleChangelist": 55116800,
 		"IsLicenseeVersion": 0,
 		"IsPromotedBuild": 0,
@@ -889,6 +889,10 @@
 		},
 		{
 			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor-JsonUtilities.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor-JsonUtilitiesEditor.dll",
 			"Type": "DynamicLibrary"
 		},
 		{
@@ -2660,6 +2664,14 @@
 			"Type": "RequiredResource"
 		},
 		{
+			"Path": "$(EngineDir)/Plugins/Editor/AssetReferenceRestrictions/Binaries/Win64/UnrealEditor-AssetReferenceRestrictions.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Editor/AssetReferenceRestrictions/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
 			"Path": "$(EngineDir)/Plugins/Editor/BlueprintHeaderView/Binaries/Win64/UnrealEditor-BlueprintHeaderView.dll",
 			"Type": "DynamicLibrary"
 		},
@@ -3160,6 +3172,22 @@
 			"Type": "RequiredResource"
 		},
 		{
+			"Path": "$(EngineDir)/Plugins/Experimental/CommonConversation/Binaries/Win64/UnrealEditor-CommonConversationEditor.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/CommonConversation/Binaries/Win64/UnrealEditor-CommonConversationGraph.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/CommonConversation/Binaries/Win64/UnrealEditor-CommonConversationRuntime.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/CommonConversation/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
 			"Path": "$(EngineDir)/Plugins/Experimental/ControlRigPhysics/Binaries/Win64/UnrealEditor-ControlRigPhysics.dll",
 			"Type": "DynamicLibrary"
 		},
@@ -3452,6 +3480,34 @@
 			"Type": "RequiredResource"
 		},
 		{
+			"Path": "$(EngineDir)/Plugins/Experimental/ModelContextProtocol/Binaries/Win64/UnrealEditor-ModelContextProtocol.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/ModelContextProtocol/Binaries/Win64/UnrealEditor-ModelContextProtocolEditor.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/ModelContextProtocol/Binaries/Win64/UnrealEditor-ModelContextProtocolEditorTests.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/ModelContextProtocol/Binaries/Win64/UnrealEditor-ModelContextProtocolEngine.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/ModelContextProtocol/Binaries/Win64/UnrealEditor-ModelContextProtocolEngineTests.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/ModelContextProtocol/Binaries/Win64/UnrealEditor-ModelContextProtocolTests.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/ModelContextProtocol/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
 			"Path": "$(EngineDir)/Plugins/Experimental/MutableAssetUserData/Binaries/Win64/UnrealEditor-MutableAssetUserData.dll",
 			"Type": "DynamicLibrary"
 		},
@@ -3512,6 +3568,18 @@
 			"Type": "RequiredResource"
 		},
 		{
+			"Path": "$(EngineDir)/Plugins/Experimental/SemanticSearch/Binaries/Win64/UnrealEditor-SemanticSearch.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/SemanticSearch/Binaries/Win64/UnrealEditor-SemanticSearchEditorIntegrations.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/SemanticSearch/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
 			"Path": "$(EngineDir)/Plugins/Experimental/SequenceNavigator/Binaries/Win64/UnrealEditor-SequenceNavigator.dll",
 			"Type": "DynamicLibrary"
 		},
@@ -3537,6 +3605,190 @@
 		},
 		{
 			"Path": "$(EngineDir)/Plugins/Experimental/ToolPresets/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/ToolsetRegistry/Binaries/Win64/UnrealEditor-ToolsetRegistry.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/ToolsetRegistry/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/AIModuleToolset/Binaries/Win64/UnrealEditor-AIModuleToolset.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/AIModuleToolset/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/AnimationAssistantToolset/Binaries/Win64/UnrealEditor-AnimationAssistantToolset.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/AnimationAssistantToolset/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/AutomationTestToolset/Binaries/Win64/UnrealEditor-AutomationTestToolset.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/AutomationTestToolset/Binaries/Win64/UnrealEditor-AutomationTestToolsetTests.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/AutomationTestToolset/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/ConfigSettingsToolset/Binaries/Win64/UnrealEditor-ConfigSettingsToolset.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/ConfigSettingsToolset/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/ConversationToolset/Binaries/Win64/UnrealEditor-ConversationToolset.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/ConversationToolset/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/DataRegistryToolset/Binaries/Win64/UnrealEditor-DataRegistryToolset.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/DataRegistryToolset/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/DataflowAgent/Binaries/Win64/UnrealEditor-DataflowAgent.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/DataflowAgent/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/EditorToolset/Binaries/Win64/UnrealEditor-EditorToolset.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/EditorToolset/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/GASToolsets/Binaries/Win64/UnrealEditor-GASToolsets.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/GASToolsets/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/GameFeaturesToolset/Binaries/Win64/UnrealEditor-GameFeaturesToolset.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/GameFeaturesToolset/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/GameplayTagsToolset/Binaries/Win64/UnrealEditor-GameplayTagsToolset.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/GameplayTagsToolset/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/MCPClientToolset/Binaries/Win64/UnrealEditor-MCPClientToolset.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/MCPClientToolset/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/NiagaraToolsets/Binaries/Win64/UnrealEditor-NiagaraToolsets.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/NiagaraToolsets/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/PCGToolset/Binaries/Win64/UnrealEditor-PCGToolset.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/PCGToolset/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/PhysicsToolsets/Binaries/Win64/UnrealEditor-PhysicsToolsets.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/PhysicsToolsets/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/PluginToolset/Binaries/Win64/UnrealEditor-PluginToolset.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/PluginToolset/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/SemanticSearchToolset/Binaries/Win64/UnrealEditor-SemanticSearchToolset.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/SemanticSearchToolset/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/SlateInspectorToolset/Binaries/Win64/UnrealEditor-SlateInspectorToolset.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/SlateInspectorToolset/Binaries/Win64/UnrealEditor-SlateInspectorToolsetTests.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/SlateInspectorToolset/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/StateTreeToolset/Binaries/Win64/UnrealEditor-StateTreeToolset.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/StateTreeToolset/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/UMGToolSet/Binaries/Win64/UnrealEditor-UMGToolSet.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/UMGToolSet/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/WorldConditionsToolset/Binaries/Win64/UnrealEditor-WorldConditionsToolset.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/WorldConditionsToolset/Binaries/Win64/UnrealEditor.modules",
 			"Type": "RequiredResource"
 		},
 		{
@@ -4388,6 +4640,22 @@
 			"Type": "RequiredResource"
 		},
 		{
+			"Path": "$(EngineDir)/Plugins/Runtime/CommonUI/Binaries/Win64/UnrealEditor-CommonInput.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Runtime/CommonUI/Binaries/Win64/UnrealEditor-CommonUI.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Runtime/CommonUI/Binaries/Win64/UnrealEditor-CommonUIEditor.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Runtime/CommonUI/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
 			"Path": "$(EngineDir)/Plugins/Runtime/ComputeFramework/Binaries/Win64/UnrealEditor-ComputeDataInterface.dll",
 			"Type": "DynamicLibrary"
 		},
@@ -4445,6 +4713,18 @@
 		},
 		{
 			"Path": "$(EngineDir)/Plugins/Runtime/ExampleDeviceProfileSelector/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Runtime/GameFeatures/Binaries/Win64/UnrealEditor-GameFeatures.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Runtime/GameFeatures/Binaries/Win64/UnrealEditor-GameFeaturesEditor.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Runtime/GameFeatures/Binaries/Win64/UnrealEditor.modules",
 			"Type": "RequiredResource"
 		},
 		{
@@ -4680,6 +4960,14 @@
 			"Type": "RequiredResource"
 		},
 		{
+			"Path": "$(EngineDir)/Plugins/Runtime/ModularGameplay/Binaries/Win64/UnrealEditor-ModularGameplay.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Runtime/ModularGameplay/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
 			"Path": "$(EngineDir)/Plugins/Runtime/MsQuic/Binaries/Win64/UnrealEditor-MsQuicRuntime.dll",
 			"Type": "DynamicLibrary"
 		},
@@ -4849,6 +5137,22 @@
 		},
 		{
 			"Path": "$(EngineDir)/Plugins/Runtime/Windows/XInputDevice/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Runtime/WorldConditions/Binaries/Win64/UnrealEditor-WorldConditions.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Runtime/WorldConditions/Binaries/Win64/UnrealEditor-WorldConditionsEditor.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Runtime/WorldConditions/Binaries/Win64/UnrealEditor-WorldConditionsTestSuite.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Runtime/WorldConditions/Binaries/Win64/UnrealEditor.modules",
 			"Type": "RequiredResource"
 		},
 		{
@@ -29118,6 +29422,10 @@
 			"Type": "UFS"
 		},
 		{
+			"Path": "$(EngineDir)/Plugins/Editor/AssetReferenceRestrictions/AssetReferenceRestrictions.uplugin",
+			"Type": "UFS"
+		},
+		{
 			"Path": "$(EngineDir)/Plugins/Editor/BlueprintHeaderView/BlueprintHeaderView.uplugin",
 			"Type": "UFS"
 		},
@@ -29322,6 +29630,10 @@
 			"Type": "UFS"
 		},
 		{
+			"Path": "$(EngineDir)/Plugins/Experimental/CommonConversation/CommonConversation.uplugin",
+			"Type": "UFS"
+		},
+		{
 			"Path": "$(EngineDir)/Plugins/Experimental/ControlRigPhysics/ControlRigPhysics.uplugin",
 			"Type": "UFS"
 		},
@@ -29398,6 +29710,10 @@
 			"Type": "UFS"
 		},
 		{
+			"Path": "$(EngineDir)/Plugins/Experimental/ModelContextProtocol/ModelContextProtocol.uplugin",
+			"Type": "UFS"
+		},
+		{
 			"Path": "$(EngineDir)/Plugins/Experimental/MutableAssetUserData/MutableAssetUserData.uplugin",
 			"Type": "UFS"
 		},
@@ -29422,6 +29738,10 @@
 			"Type": "UFS"
 		},
 		{
+			"Path": "$(EngineDir)/Plugins/Experimental/SemanticSearch/SemanticSearch.uplugin",
+			"Type": "UFS"
+		},
+		{
 			"Path": "$(EngineDir)/Plugins/Experimental/SequenceNavigator/SequenceNavigator.uplugin",
 			"Type": "UFS"
 		},
@@ -29431,6 +29751,98 @@
 		},
 		{
 			"Path": "$(EngineDir)/Plugins/Experimental/ToolPresets/ToolPresets.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/ToolsetRegistry/ToolsetRegistry.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/AIModuleToolset/AIModuleToolset.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/AllToolsets/AllToolsets.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/AnimationAssistantToolset/AnimationAssistantToolset.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/AutomationTestToolset/AutomationTestToolset.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/ConfigSettingsToolset/ConfigSettingsToolset.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/ConversationToolset/ConversationToolset.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/DataRegistryToolset/DataRegistryToolset.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/DataflowAgent/DataflowAgent.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/EditorToolset/EditorToolset.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/GASToolsets/GASToolsets.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/GameFeaturesToolset/GameFeaturesToolset.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/GameplayTagsToolset/GameplayTagsToolset.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/MCPClientToolset/MCPClientToolset.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/NiagaraToolsets/NiagaraToolsets.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/PCGToolset/PCGToolset.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/PhysicsToolsets/PhysicsToolsets.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/PluginToolset/PluginToolset.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/SemanticSearchToolset/SemanticSearchToolset.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/SlateInspectorToolset/SlateInspectorToolset.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/StateTreeToolset/StateTreeToolset.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/UMGToolSet/UMGToolSet.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/Toolsets/WorldConditionsToolset/WorldConditionsToolset.uplugin",
 			"Type": "UFS"
 		},
 		{
@@ -29682,6 +30094,10 @@
 			"Type": "UFS"
 		},
 		{
+			"Path": "$(EngineDir)/Plugins/Runtime/CommonUI/CommonUI.uplugin",
+			"Type": "UFS"
+		},
+		{
 			"Path": "$(EngineDir)/Plugins/Runtime/ComputeFramework/ComputeFramework.uplugin",
 			"Type": "UFS"
 		},
@@ -29699,6 +30115,10 @@
 		},
 		{
 			"Path": "$(EngineDir)/Plugins/Runtime/ExampleDeviceProfileSelector/ExampleDeviceProfileSelector.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Runtime/GameFeatures/GameFeatures.uplugin",
 			"Type": "UFS"
 		},
 		{
@@ -29751,6 +30171,10 @@
 		},
 		{
 			"Path": "$(EngineDir)/Plugins/Runtime/ModelViewViewModel/ModelViewViewModel.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Runtime/ModularGameplay/ModularGameplay.uplugin",
 			"Type": "UFS"
 		},
 		{
@@ -29818,6 +30242,10 @@
 			"Type": "UFS"
 		},
 		{
+			"Path": "$(EngineDir)/Plugins/Runtime/WorldConditions/WorldConditions.uplugin",
+			"Type": "UFS"
+		},
+		{
 			"Path": "$(EngineDir)/Plugins/Tests/InterchangeTests/InterchangeTests.uplugin",
 			"Type": "UFS"
 		},
@@ -29848,16 +30276,19 @@
 	],
 	"BuildPlugins": [
 		"ACLPlugin",
+		"AIModuleToolset",
 		"AISupport",
 		"ActorLayerUtilities",
 		"ActorSequence",
 		"AdvancedRenamer",
 		"AlembicImporter",
+		"AllToolsets",
 		"AndroidDeviceProfileSelector",
 		"AndroidFileServer",
 		"AndroidMedia",
 		"AndroidMoviePlayer",
 		"AndroidPermission",
+		"AnimationAssistantToolset",
 		"AnimationData",
 		"AnimationModifierLibrary",
 		"AnimationSharing",
@@ -29866,6 +30297,7 @@
 		"AppleMoviePlayer",
 		"ArchVisCharacter",
 		"AssetManagerEditor",
+		"AssetReferenceRestrictions",
 		"AssetTags",
 		"AudioCapture",
 		"AudioInsights",
@@ -29874,6 +30306,7 @@
 		"AudioSynesthesia",
 		"AudioWidgets",
 		"AutomatedPerfTestTools",
+		"AutomationTestToolset",
 		"AutomationUtils",
 		"AvfMedia",
 		"BackChannel",
@@ -29902,12 +30335,15 @@
 		"CmdLinkServer",
 		"CodeLiteSourceCodeAccess",
 		"ColorGrading",
+		"CommonConversation",
+		"CommonUI",
 		"CompositeCore",
 		"ComputeFramework",
 		"ConcertMain",
 		"ConcertSharedSlate",
 		"ConcertSyncClient",
 		"ConcertSyncCore",
+		"ConfigSettingsToolset",
 		"ConsoleVariables",
 		"ContentBrowserAssetDataSource",
 		"ContentBrowserClassDataSource",
@@ -29916,12 +30352,15 @@
 		"ControlRigModules",
 		"ControlRigPhysics",
 		"ControlRigSpline",
+		"ConversationToolset",
 		"CryptoKeys",
 		"CurveEditorTools",
 		"CustomMeshComponent",
 		"DataRegistry",
+		"DataRegistryToolset",
 		"DataValidation",
 		"Dataflow",
+		"DataflowAgent",
 		"DatasmithContent",
 		"DeformerGraph",
 		"DerivedDataBuildController",
@@ -29935,6 +30374,7 @@
 		"EditorScriptingUtilities",
 		"EditorTRSGizmo",
 		"EditorTelemetry",
+		"EditorToolset",
 		"EngineAssetDefinitions",
 		"EngineCameras",
 		"EnhancedInput",
@@ -29945,12 +30385,16 @@
 		"FileSandbox",
 		"Fracture",
 		"FullBodyIK",
+		"GASToolsets",
 		"GLTFExporter",
 		"GPUReshape",
+		"GameFeatures",
+		"GameFeaturesToolset",
 		"GameplayAbilities",
 		"GameplayCameras",
 		"GameplayInsights",
 		"GameplayTagsEditor",
+		"GameplayTagsToolset",
 		"GeometryCache",
 		"GeometryCollectionPlugin",
 		"GeometryDataflow",
@@ -29985,6 +30429,7 @@
 		"LinuxDeviceProfileSelector",
 		"LocalizableMessage",
 		"LocationServicesBPLibrary",
+		"MCPClientToolset",
 		"MP4Utilities",
 		"MacGraphicsSwitching",
 		"MassInsights",
@@ -30001,8 +30446,10 @@
 		"Metasound",
 		"MobileLauncherProfileWizard",
 		"MobilePatchingUtils",
+		"ModelContextProtocol",
 		"ModelViewViewModel",
 		"ModelingToolsEditorMode",
+		"ModularGameplay",
 		"MsQuic",
 		"Mutable",
 		"MutableAssetUserData",
@@ -30015,6 +30462,7 @@
 		"NiagaraInsights",
 		"NiagaraPreviewContent",
 		"NiagaraSimCaching",
+		"NiagaraToolsets",
 		"NullSourceCodeAccess",
 		"ObjectMixer",
 		"OnlineBase",
@@ -30026,14 +30474,17 @@
 		"OnlineSubsystemUtils",
 		"OodleNetwork",
 		"PCG",
+		"PCGToolset",
 		"Paper2D",
 		"PerforceSourceControl",
 		"PhysicsControl",
+		"PhysicsToolsets",
 		"PixWinPlugin",
 		"PlanarCut",
 		"PlasticSourceControl",
 		"PlatformCrypto",
 		"PluginBrowser",
+		"PluginToolset",
 		"PluginUtils",
 		"PortableObjectFileDataSource",
 		"ProceduralMeshComponent",
@@ -30054,6 +30505,8 @@
 		"RuntimeTelemetry",
 		"SQLiteCore",
 		"Scribble",
+		"SemanticSearch",
+		"SemanticSearchToolset",
 		"SequenceNavigator",
 		"SequenceValidator",
 		"SequencerAnimTools",
@@ -30062,9 +30515,11 @@
 		"SkeletalMerging",
 		"SkeletalMeshModelingTools",
 		"SkeletalReduction",
+		"SlateInspectorToolset",
 		"SoundFields",
 		"SpeedTreeImporter",
 		"StateTree",
+		"StateTreeToolset",
 		"StylusInput",
 		"SubversionSourceControl",
 		"Synthesis",
@@ -30073,8 +30528,10 @@
 		"TemplateSequence",
 		"TmvMedia",
 		"ToolPresets",
+		"ToolsetRegistry",
 		"TraceUtilities",
 		"TweeningUtils",
+		"UMGToolSet",
 		"UMGWidgetPreview",
 		"UObjectPlugin",
 		"UVEditor",
@@ -30091,6 +30548,8 @@
 		"WindowsDeviceProfileSelector",
 		"WindowsMoviePlayer",
 		"WmfMedia",
+		"WorldConditions",
+		"WorldConditionsToolset",
 		"WorldMetrics",
 		"WorldPartitionHLODUtilities",
 		"XCodeSourceCodeAccess",
