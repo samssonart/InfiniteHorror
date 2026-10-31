@@ -47,6 +47,13 @@ public:
     TSubclassOf<UHUDWidget> UIWidgetBP;
 
     /**
+     * @brief Viewport Z-order of the HUD. Kept above the pause menu (AMainCharacterController::PauseMenuZOrder)
+     * so the HUD stays fully visible over the menu's backdrop.
+     */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+    int32 UIWidgetZOrder = 200;
+
+    /**
      * @brief Pointer to the GameSettings instance.
      */
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Settings")

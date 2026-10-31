@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "CommonUserWidget.h"
 #include "HUDWidget.generated.h"
 
 class APlayerCharacter;
@@ -20,16 +20,19 @@ enum class EWidgetType : uint8
 
 
 /**
- * @brief  HUD widget that manages visibility and updates of its child widgets
+ * @brief  HUD widget that manages visibility and updates of its child widgets.
+ * Not activatable: it takes no input, and it draws above the pause menu, where an activatable
+ * widget would take input routing away from the menu.
  */
 UCLASS()
-class INFINITEHORROR_API UHUDWidget : public UUserWidget
+class INFINITEHORROR_API UHUDWidget : public UCommonUserWidget
 {
 	GENERATED_BODY()
-	
+
 public:
 
 	virtual void NativeConstruct() override;
+	virtual void NativeDestruct() override;
 	void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	void CollectAllWidgets(TArray<UWidget*>& OutWidgets);
 
@@ -44,6 +47,13 @@ protected:
 	UFUNCTION(BlueprintPure)
 	float UpdateBatteryPercentage();
 
+	/**
+	 * @brief Holds every tracked widget at full opacity while the pause menu is open;
+	 * on close their timers restart from VisibilityCooldown so they fade out as usual.
+	 * @param bIsOpen Whether the pause menu is now open.
+	 */
+	UFUNCTION()
+	void HandlePauseMenuStateChanged(bool bIsOpen);
 
 
 private:
@@ -54,6 +64,11 @@ private:
 	bool InitialVisibility = true;
 
 	APlayerCharacter* GetPlayerCharacter();
+
+	void ShowAllTrackedWidgets();
+
+	/* True while the pause menu is open; tracked widgets do not fade. */
+	bool bHoldFullyVisible = false;
 
 	UPROPERTY(Transient)
 	TObjectPtr<APlayerCharacter> PlayerCharacter = nullptr;

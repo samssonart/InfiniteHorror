@@ -38,7 +38,7 @@ void AGameModeManager::BeginPlay()
 		UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), UIWidgetBP);
 		if (Widget)
 		{
-			Widget->AddToViewport();
+			Widget->AddToViewport(UIWidgetZOrder);
 		}
 	}
 }

@@ -8,6 +8,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/PlayerCharacter.h"
+#include "Player/MainCharacterController.h"
 
 void UHUDWidget::NativeConstruct()
 {
@@ -30,7 +31,8 @@ void UHUDWidget::NativeConstruct()
 			continue;
 		}
 
-		Widget->SetVisibility(InitialVisibility ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+		// Hit-test invisible so the HUD never blocks clicks on menus drawn beneath it.
+		Widget->SetVisibility(InitialVisibility ? ESlateVisibility::HitTestInvisible : ESlateVisibility::Hidden);
 		TrackedWidgets.Add(Widget);
 		VisibilityTimers.Add(VisibilityCooldown);
 
@@ -52,11 +54,54 @@ void UHUDWidget::NativeConstruct()
 	{
 		UE_LOG(LogInfiniteHorror, Warning, TEXT("%s: no widget with 'MentalHealth' in its name found; mental health HUD will not refresh."), *GetName());
 	}
+
+	if (AMainCharacterController* Controller = GetOwningPlayer<AMainCharacterController>())
+	{
+		Controller->OnPauseMenuStateChanged.AddUniqueDynamic(this, &UHUDWidget::HandlePauseMenuStateChanged);
+		bHoldFullyVisible = Controller->IsPauseMenuOpen();
+	}
+	else
+	{
+		UE_LOG(LogInfiniteHorror, Warning, TEXT("%s: owning player is not AMainCharacterController; HUD will not stay visible in the pause menu."), *GetName());
+	}
+}
+
+void UHUDWidget::NativeDestruct()
+{
+	if (AMainCharacterController* Controller = GetOwningPlayer<AMainCharacterController>())
+	{
+		Controller->OnPauseMenuStateChanged.RemoveDynamic(this, &UHUDWidget::HandlePauseMenuStateChanged);
+	}
+
+	Super::NativeDestruct();
+}
+
+void UHUDWidget::HandlePauseMenuStateChanged(bool bIsOpen)
+{
+	bHoldFullyVisible = bIsOpen;
+	ShowAllTrackedWidgets();
+}
+
+void UHUDWidget::ShowAllTrackedWidgets()
+{
+	for (int32 i = 0; i < VisibilityTimers.Num(); ++i)
+	{
+		VisibilityTimers[i] = VisibilityCooldown;
+		if (UWidget* Widget = TrackedWidgets[i])
+		{
+			Widget->SetRenderOpacity(1.0f);
+		}
+	}
 }
 
 void UHUDWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
+
+	if (bHoldFullyVisible)
+	{
+		return;
+	}
 
 	for (int32 i = 0; i < VisibilityTimers.Num(); ++i)
 	{
