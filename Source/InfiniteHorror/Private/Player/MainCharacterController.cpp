@@ -22,6 +22,20 @@ AMainCharacterController::AMainCharacterController()
 	}
 }
 
+void AMainCharacterController::BeginPlay()
+{
+	Super::BeginPlay();
+	ApplyGameInputConfig();
+}
+
+void AMainCharacterController::ApplyGameInputConfig()
+{
+	if (UCommonUIActionRouterBase* ActionRouter = ULocalPlayer::GetSubsystem<UCommonUIActionRouterBase>(GetLocalPlayer()))
+	{
+		ActionRouter->SetActiveUIInputConfig(FUIInputConfig(ECommonInputMode::Game, EMouseCaptureMode::CapturePermanently_IncludingInitialMouseDown));
+	}
+}
+
 void AMainCharacterController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -44,8 +58,10 @@ void AMainCharacterController::TogglePauseMenu()
 	{
 		ClosePauseMenu();
 	}
-	else
+	else if (GetPawn())
 	{
+		// No pawn means the terrain is still loading. The menu would be hidden behind the loading
+		// overlay, and pausing would stop the timers that end the load.
 		OpenPauseMenu();
 	}
 }
@@ -101,12 +117,7 @@ void AMainCharacterController::HandlePauseMenuDeactivated()
 {
 	PauseMenuWidget->RemoveFromParent();
 	SetPause(false);
-
-	// CommonUI keeps the last applied config when no activatable widget remains, so hand input back to the game explicitly.
-	if (UCommonUIActionRouterBase* ActionRouter = ULocalPlayer::GetSubsystem<UCommonUIActionRouterBase>(GetLocalPlayer()))
-	{
-		ActionRouter->SetActiveUIInputConfig(FUIInputConfig(ECommonInputMode::Game, EMouseCaptureMode::CapturePermanently_IncludingInitialMouseDown));
-	}
+	ApplyGameInputConfig();
 
 	OnPauseMenuStateChanged.Broadcast(false);
 }

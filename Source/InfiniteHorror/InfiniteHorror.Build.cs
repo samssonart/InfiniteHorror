@@ -12,6 +12,8 @@ public class InfiniteHorror : ModuleRules
 			"Foliage", "AIModule", "NavigationSystem", "GameplayTasks", "Slate", "SlateCore", "UMG", "GameplayAbilities", "GameplayTags",
 			"CommonUI", "CommonInput" });
 		
+		PrivateDependencyModuleNames.Add("MoviePlayer");
+
 		// Uncomment if you are using online features
 		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
 
