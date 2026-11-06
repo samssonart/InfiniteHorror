@@ -34,7 +34,13 @@ protected:
     virtual void BeginPlay() override;
 
     /**
-     * @brief Spawns pawns for every player that was waiting on terrain streaming.
+     * @brief Removes the loading overlay if it is still showing when the map ends.
+     * @param EndPlayReason Why the actor is leaving play.
+     */
+    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+    /**
+     * @brief Spawns pawns for every player that was waiting on terrain streaming and removes the loading overlay.
      */
     UFUNCTION()
     void OnInitialPatchesLoaded();
@@ -61,7 +67,12 @@ public:
 
 private:
     APatchStreamingManager* FindPatchStreamingManager() const;
+    void ShowLoadingOverlay();
+    void HideLoadingOverlay();
 
     UPROPERTY(Transient)
     TArray<TObjectPtr<APlayerController>> PlayersWaitingForTerrain;
+
+    /* Covers the world from the end of the map load until the initial terrain is ready. */
+    TSharedPtr<SWidget> LoadingOverlay;
 };

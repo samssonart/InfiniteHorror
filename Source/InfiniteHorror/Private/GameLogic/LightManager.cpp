@@ -16,7 +16,7 @@ void ALightManager::BeginPlay()
 
 	if (MainLight)
 	{
-		if (UDirectionalLightComponent* LightComponent = MainLight->GetComponent())
+		if (ULightComponent* LightComponent = MainLight->GetLightComponent())
 		{
 			LightComponent->SetIntensity(GameIntensity);
 		}

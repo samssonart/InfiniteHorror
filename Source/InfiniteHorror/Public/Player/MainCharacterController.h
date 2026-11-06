@@ -50,12 +50,20 @@ public:
 
 protected:
 	/**
+	 * @brief Hands input to the game; a menu in the previous map may have left CommonUI in menu mode.
+	 */
+	virtual void BeginPlay() override;
+
+	/**
 	 * @brief Binds the controller-level input actions.
 	 */
 	virtual void SetupInputComponent() override;
 
 private:
 	void TogglePauseMenu();
+
+	/* CommonUI keeps the last applied config when no activatable widget remains, so this is explicit. */
+	void ApplyGameInputConfig();
 
 	/* Runs however the menu was closed (Resume button, back action, or the pause key). */
 	void HandlePauseMenuDeactivated();
